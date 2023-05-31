@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_left_arrow"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            style="@style/TitleTextStyle"
+            android:text="Forgot Password"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/main_activity_design"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            style="@style/TitleTextStyle"
+            android:text="Do not remember your password?"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_height="wrap_content"
+                app:shapeAppearance="@style/RoundedInputTextBox"
+                android:hint="Enter Email id*">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/edt_email_id_RA"
+                    android:maxLength="10"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginTop="30dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    style="@style/TitleTextStyle"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:textSize="20dp"
+                    android:text="Login?"
+                    android:textColor="@color/colorSecondary"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    style="@style/TitleTextStyle"
+                    android:gravity="right"
+                    android:paddingRight="10dp"
+                    android:textSize="20dp"
+                    android:text="Sign Up?"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_margin="30dp"
+            android:elevation="10dp"
+            android:background="@drawable/button_drawable"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                style="@style/TitleTextStyle"
+                android:text="Submit"
+                android:layout_margin="15dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

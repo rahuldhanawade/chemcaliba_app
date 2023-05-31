@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:minHeight="220dp"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:id="@+id/nav_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/logo_chemcaliba" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/nav_header_userName"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10sp"
+        android:layout_below="@+id/nav_logo"
+        android:textAllCaps="true"/>
+
+    <TextView
+        android:id="@+id/nav_Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:gravity="center|start"
+        android:textSize="14sp"
+        android:layout_marginLeft="10sp"
+        android:layout_below="@+id/nav_header_userName" />
+
+</LinearLayout>

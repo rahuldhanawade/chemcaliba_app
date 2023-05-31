@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TitleTextStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">@font/calibri_regular</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="EditTextStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">@font/calibri_regular</item>
+        <item name="android:background">@drawable/edittext_drawable</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:height">42dp</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
+    <style name="RoundedInputTextBox" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+</resources>

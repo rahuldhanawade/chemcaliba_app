@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="@string/app_nav_1" />
+
+        <item
+            android:id="@+id/nav_our_courses"
+            android:title="@string/app_nav_2" />
+
+        <item
+            android:id="@+id/nav_enrolled_courses"
+            android:title="@string/app_nav_3" />
+
+        <item
+              android:id="@+id/nav_test_results"
+              android:title="@string/app_nav_4" />
+
+        <item
+             android:id="@+id/nav_test_schedule"
+             android:title="@string/app_nav_5" />
+
+        <item
+             android:id="@+id/nav_announccments"
+             android:title="@string/app_nav_6" />
+
+        <item
+             android:id="@+id/nav_pt_meeting"
+             android:title="@string/app_nav_7" />
+
+        <item
+            android:id="@+id/nav_holidays"
+            android:title="@string/app_nav_8" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/app_nav_9" />
+
+    </group>
+
+
+
+</menu>

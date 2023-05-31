@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:weightSum="10"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="2.5"
+        android:gravity="center"
+        android:layout_height="0dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:src="@drawable/logo_chemcaliba"
+            android:layout_margin="50dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="7.5"
+        android:orientation="vertical"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                style="@style/TitleTextStyle"
+                android:text="Sign In"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                style="@style/TitleTextStyle"
+                android:text="Sign in to your account"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                app:boxStrokeColor="@color/colorPrimary"
+                android:hint="Enter Email ID*"
+                app:shapeAppearance="@style/RoundedInputTextBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <EditText
+                    android:id="@+id/EdtEmail_Mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_man_user"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/calibri_regular"
+                    android:inputType="text"
+                    android:textSize="14sp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/colorPrimary"
+                android:layout_marginBottom="20dp"
+                android:hint="Enter Password*"
+                app:shapeAppearance="@style/RoundedInputTextBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:passwordToggleEnabled="true">
+
+                <EditText
+                    android:id="@+id/EdtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_lock_outline"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/calibri_regular"
+                    android:inputType="textPassword"
+                    android:textSize="14sp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                style="@style/TitleTextStyle"
+                android:id="@+id/tv_reset_LA"
+                android:gravity="right"
+                android:text="Forgot password?"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_margin="30dp"
+                android:elevation="10dp"
+                android:id="@+id/linear_login"
+                android:background="@drawable/button_drawable"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    style="@style/TitleTextStyle"
+                    android:text="Login"
+                    android:layout_margin="15dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/TitleTextStyle"
+                    android:gravity="center"
+                    android:text="Doesn't have an account"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/TitleTextStyle"
+                    android:id="@+id/tv_sign_up"
+                    android:gravity="center"
+                    android:text="Sign Up"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorSecondary"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:weightSum="12">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="3"
+                android:background="@color/black" />
+
+            <TextView
+                style="@style/TitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:textStyle="bold"
+                android:text="\@Copyright by 2023 Chemcaliba"
+                android:textAlignment="center"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="3"
+                android:background="@color/black" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
