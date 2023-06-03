@@ -18,16 +18,13 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.rahuldhanawade.chemcaliba.R;
+import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
 
     private static final int REQUEST_PERMISSIONS = 20;
     static int SPLASH_TIME_OUT = 1000;
-
-    SharedPreferences login;
-    SharedPreferences.Editor edit;
-
     String status;
     private static final String TAG = "SplashActivity";
 
@@ -36,8 +33,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        login = getSharedPreferences("LOGIN", MODE_PRIVATE);
-        status = login.getString("status", "N/A");
+        status = UtilitySharedPreferences.getPrefs(getApplicationContext(),"status");;
 
         if (checkInternetConnection(null)) {
             checkAppPermission();
