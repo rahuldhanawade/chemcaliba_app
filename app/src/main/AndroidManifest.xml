@@ -20,6 +20,9 @@
         android:theme="@style/Theme.Chemcaliba"
         tools:targetApi="31">
         <activity
+            android:name=".activity.LiveLectureActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.MainActivity"
             android:exported="false" />
         <activity
