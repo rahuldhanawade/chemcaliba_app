@@ -56,4 +56,7 @@ dependencies {
 
     //Snacky
     implementation 'com.github.matecode:Snacky:1.1.5'
+
+    //CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

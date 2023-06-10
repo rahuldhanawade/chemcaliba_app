@@ -20,6 +20,7 @@ import com.rahuldhanawade.chemcaliba.activity.EnrolledActivity;
 import com.rahuldhanawade.chemcaliba.activity.LoginActivity;
 import com.rahuldhanawade.chemcaliba.activity.MainActivity;
 import com.rahuldhanawade.chemcaliba.activity.OurCoursesActivity;
+import com.rahuldhanawade.chemcaliba.activity.ProfileActivity;
 import com.rahuldhanawade.chemcaliba.activity.SplashScreen;
 import com.rahuldhanawade.chemcaliba.activity.TestResultActivity;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
@@ -104,6 +105,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             Intent i=new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
+            finish();
+        }else if(id == R.id.nav_profile){
+            Intent i=new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(i);
             finish();
         }else if(id == R.id.nav_logout){
             UtilitySharedPreferences.clearPref(getApplicationContext());

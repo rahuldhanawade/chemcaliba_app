@@ -182,7 +182,7 @@ public class CommonMethods
 
 	public static String returnValueChangeNull(String value){
 
-		String Str_value = "-";
+		String Str_value = "";
 
 		if(value == null || value.equals("null") || value.equals("")){
 			return Str_value;

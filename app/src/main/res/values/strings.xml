@@ -10,6 +10,7 @@
     <string name="app_nav_7">P-T Meeting</string>
     <string name="app_nav_8">Holidays</string>
     <string name="app_nav_9">Log Out</string>
+    <string name="app_nav_10">Profile</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
