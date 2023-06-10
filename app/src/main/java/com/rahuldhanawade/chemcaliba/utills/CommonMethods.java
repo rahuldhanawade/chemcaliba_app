@@ -1,15 +1,11 @@
 package com.rahuldhanawade.chemcaliba.utills;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -17,22 +13,15 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rahuldhanawade.chemcaliba.R;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -47,20 +36,16 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
+import de.mateware.snacky.Snacky;
 import es.dmoral.toasty.Toasty;
-
 
 public class CommonMethods
 {
 
 	public static final String OTP_DELIMITER = ":";
-	private static final String TAG = CommonMethods.class.getSimpleName();
-	public static String FOLDER_PATH = Environment.getExternalStorageDirectory().toString()+"/HIB/";
-	private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	private static final String NUMERIC_STRING = "0123456789";
-
+	public static final String SMS_ORIGIN = "MYMFNOW";
+	public static String FOLDER_PATH = Environment.getExternalStorageDirectory().toString()+"/MYMFNOW/";
 
 	public static void DisplayToast(Context context, String message)
 	{
@@ -154,60 +139,82 @@ public class CommonMethods
 		return age;
 	}
 
+	public static  void hiddenKeyboard(View v, Context con) {
 
-	public static String getCapsSentences(String tagName) {
-		if(tagName != null && !tagName.equals("") && !tagName.equals("null")){
-			String[] splits = tagName.toLowerCase().split(" ");
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < splits.length; i++) {
-				String eachWord = splits[i];
-				if (i > 0 && eachWord.length() > 0) {
-					sb.append(" ");
+		InputMethodManager keyboard = (InputMethodManager)con.getSystemService(con.INPUT_METHOD_SERVICE);
+
+		keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+	}
+
+	public static String removeStringFromCommaSeperatedString(String mainString, String strToRemove) {
+		if(!mainString.isEmpty()){
+			List<String> stringList = new LinkedList<String>(Arrays.asList(mainString.split(",")));
+			for (int i=0;i<stringList.size();i++){
+				if(stringList.get(i).equalsIgnoreCase(strToRemove)){
+					stringList.remove(strToRemove);
+					break;
 				}
-				String cap = eachWord.substring(0, 1).toUpperCase()
-						+ eachWord.substring(1);
-				sb.append(cap);
 			}
-			return sb.toString();
-		}else{
-			String Str_name = "- -";
-			return Str_name;
+			return TextUtils.join(",", stringList);
 		}
+		return mainString;
 	}
 
-	public static String checkNullExcHandler(String value){
+	//		public static void hideKeyBoardInsideFragment() {
+//			final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//			imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+//		}
+	public static String setDateFormat(String date){
+		DateFormat OwnDOBinputFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat OwnDOBoutputFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String OwnDOBinputDateStr=date;
+		Date OwnDOBdate = null;
+		try {
+			OwnDOBdate = OwnDOBinputFormat.parse(OwnDOBinputDateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		String OwnDOBoutputDateStr = OwnDOBoutputFormat.format(OwnDOBdate);
 
-		String Str_value = "";
+		return OwnDOBoutputDateStr;
+	}
 
-		if(value != null && !value.equals("") && !value.equals("null") && !value.equals("undefined")){
-			return value;
-		}else {
+	public static String returnValueChangeNull(String value){
+
+		String Str_value = "-";
+
+		if(value == null || value.equals("null") || value.equals("")){
 			return Str_value;
+		}else{
+			return value;
 		}
+
 	}
 
-	public static void DisplayPopUp(Activity myActivity,String message){
-		Dialog dialog = new Dialog(myActivity);
-		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setCanceledOnTouchOutside(true);
-		dialog.setCancelable(true);
-		dialog.setContentView(R.layout.pop_up_error);
-		Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(
-				new ColorDrawable(android.graphics.Color.TRANSPARENT));
-		dialog.show();
+	public boolean isNull(String value){
 
-		TextView textView=dialog.findViewById(R.id.tv_pop_up_error);
-		textView.setText(message);
-		TextView okButton = (TextView) dialog.findViewById(R.id.btn_ok_pop_error);
-		okButton.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				dialog.dismiss();
-			}
-		});
+		if(value == null || value.equals("null") || value.equals("")){
+			return true;
+		}else{
+			return false;
+		}
 
+	}
+
+	public static String setTimeFormat(String time){
+		DateFormat TimeinputFormat = new SimpleDateFormat("hh:mm");
+		DateFormat TimeoutputFormat = new SimpleDateFormat("hh:mm a");
+		String TimeinputDateStr=time;
+		Date Time = null;
+		try {
+			Time = TimeinputFormat.parse(TimeinputDateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		String TimeOutputStr = TimeoutputFormat.format(Time);
+
+		return TimeOutputStr;
 	}
 
 	public static String getDayFromDate(String date, String type){
@@ -269,69 +276,20 @@ public class CommonMethods
 		return dayDifference;
 	}
 
-	public static  void hiddenKeyboard(View v, Context con) {
-
-		InputMethodManager keyboard = (InputMethodManager)con.getSystemService(con.INPUT_METHOD_SERVICE);
-
-		keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-	}
-	public static Bitmap getBitmapFromURL(String src) {
-		try {
-			URL url = new URL(src);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setDoInput(true);
-			connection.connect();
-			InputStream input = connection.getInputStream();
-			Bitmap myBitmap = BitmapFactory.decodeStream(input);
-			return myBitmap;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
+	public static String getCapsSentences(String tagName) {
+		String[] splits = tagName.toLowerCase().split(" ");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < splits.length; i++) {
+			String eachWord = splits[i];
+			if (i > 0 && eachWord.length() > 0) {
+				sb.append(" ");
+			}
+			String cap = eachWord.substring(0, 1).toUpperCase()
+					+ eachWord.substring(1);
+			sb.append(cap);
 		}
+		return sb.toString();
 	}
-
-	public static String randomAlphaNumeric(int count) {
-		StringBuilder builder = new StringBuilder();
-		while (count-- != 0) {
-			int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
-			builder.append(ALPHA_NUMERIC_STRING.charAt(character));
-		}
-		return builder.toString();
-	}
-
-	public static String randomNumeric(int count) {
-		StringBuilder builder = new StringBuilder();
-		while (count-- != 0) {
-			int character = (int)(Math.random()*NUMERIC_STRING.length());
-			builder.append(NUMERIC_STRING.charAt(character));
-		}
-		return builder.toString();
-	}
-
-	public static String BitMapToString(Bitmap bitmap){
-		ByteArrayOutputStream baos=new ByteArrayOutputStream();
-		bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-		byte [] b=baos.toByteArray();
-		String temp= Base64.encodeToString(b, Base64.DEFAULT);
-		return temp;
-	}
-
-	public static Bitmap StringToBitMap(String encodedString){
-		try {
-			byte [] encodeByte= Base64.decode(encodedString, Base64.DEFAULT);
-			Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-			return bitmap;
-		} catch(Exception e) {
-			e.getMessage();
-			return null;
-		}
-	}
-
-//		public static void hideKeyBoardInsideFragment() {
-//			final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-//			imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-//		}
 
 	public static String GetSystemTime(){
 
@@ -391,6 +349,77 @@ public class CommonMethods
 		return NewString;
 	}
 
+	public static void DisplaySnackBar(View view, String message, String type)
+	{
+		if(type!=null && !type.equalsIgnoreCase("")){
+			if(type.equalsIgnoreCase("INFO")){
+				Snacky.builder()
+						.setView(view)
+						.setText(message)
+						.centerText()
+						.setTextColor(Color.WHITE)
+						.setDuration(Snacky.LENGTH_SHORT)
+						.info()
+						.show();
+
+			}else if(type.equalsIgnoreCase("SUCCESS")){
+				Snacky.builder()
+						.setView(view)
+						.setText(message)
+						.centerText()
+						.setTextColor(Color.WHITE)
+						.setDuration(Snacky.LENGTH_SHORT)
+						.success()
+						.show();
+
+			}else if(type.equalsIgnoreCase("WARNING")){
+				Snacky.builder()
+						.setView(view)
+						.setText(message)
+						.centerText()
+						.setTextColor(Color.WHITE)
+						.setDuration(Snacky.LENGTH_SHORT)
+						.warning()
+						.show();
+
+			}else if(type.equalsIgnoreCase("ERROR")){
+
+
+				Snacky.builder()
+						.setView(view)
+						.setText(message)
+						.centerText()
+						.setTextColor(Color.WHITE)
+						.setDuration(Snacky.LENGTH_SHORT)
+						.error()
+						.show();
+
+			}else {
+				Snacky.builder()
+						.setView(view)
+						.setText(message)
+						.centerText()
+						.setTextColor(Color.WHITE)
+						.setDuration(Snacky.LENGTH_SHORT)
+						.build()
+						.show();
+			}
+
+
+
+		}else {
+			Snacky.builder()
+					.setView(view)
+					.setText(message)
+					.centerText()
+					.setTextColor(Color.WHITE)
+					.setDuration(Snacky.LENGTH_SHORT)
+					.build()
+					.show();
+		}
+
+	}
+
 	public static int GetSystemHours(){
 
 		int Systemhours = 0;
@@ -446,7 +475,7 @@ public class CommonMethods
 		Boolean result = false;
 
 		try {
-			SQLiteDatabase database = context.openOrCreateDatabase("hib.db", Context.MODE_PRIVATE, null);
+			SQLiteDatabase database = context.openOrCreateDatabase("FinPin.db", Context.MODE_PRIVATE, null);
 			String query = "INSERT INTO TBL_LOG(LogRegisteredDate,UserId,FileName,Message) VALUES('"+rdate+ "', '"+UserId+"','"+FileName+"','"+Message+"');";
 			database.execSQL(query);
 			database.close();
@@ -775,30 +804,9 @@ public class CommonMethods
 		return FormattedString;
 	}
 
-	public static String removeStringFromCommaSeperatedString(String mainString, String strToRemove) {
-		if(!mainString.isEmpty()){
-			List<String> stringList = new LinkedList<String>(Arrays.asList(mainString.split(",")));
-			for (int i=0;i<stringList.size();i++){
-				if(stringList.get(i).equalsIgnoreCase(strToRemove)){
-					stringList.remove(strToRemove);
-					break;
-				}
-			}
-			return TextUtils.join(",", stringList);
-		}
-		return mainString;
-	}
-
-	public static String format(String str) {
-		if (str != null && str.length() > 0 && str.charAt(str.length() - 1) == ',') {
-			str = str.substring(0, str.length() - 1);
-		}
-		return str;
-	}
-
 
 	public  void TruncateTableLogs(Context context){
-		SQLiteDatabase database = context.openOrCreateDatabase("hib.db", Context.MODE_PRIVATE, null);
+		SQLiteDatabase database = context.openOrCreateDatabase("FinPin.db", Context.MODE_PRIVATE, null);
 		String query = "DELETE FROM  TBL_LOG;";
 		database.execSQL(query);
 		database.close();
@@ -903,20 +911,16 @@ public class CommonMethods
 		return total_months;
 	}
 
-	public static String ConvertDateFormat(String DateIn_YMD) {
-		String finalDate = "";
-		if (DateIn_YMD != null && !DateIn_YMD.isEmpty() && !DateIn_YMD.equalsIgnoreCase("null")) {
-			SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-			SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+	public static String DateDisplayedFormat(String DateIn_YMD){
 
-			Date date = null;
-			try {
-				date = inputFormat.parse(DateIn_YMD);
-				finalDate = outputFormat.format(date);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+		String finalDate = null;
+
+		try {
+			finalDate = new SimpleDateFormat("dd-MM-yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(DateIn_YMD));
+		} catch (ParseException e) {
+			Log.d("Exception", e.toString());
 		}
+
 		return finalDate;
 	}
 
@@ -1024,55 +1028,14 @@ public class CommonMethods
 		return  month_code;
 	}
 
-	public static String ucFirst(String name){
-		String captilizedString="";
-		if(!name.trim().equals("")){
-			captilizedString = name.substring(0,1).toUpperCase() + name.substring(1);
-		}
-		return captilizedString;
-	}
-
 	public static String DisplayCurrentDate() {
 		String CurrentDate = null;
-		SimpleDateFormat formDate = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat formDate = new SimpleDateFormat("dd-MM-yyyy");
 
 		// String strDate = formDate.format(System.currentTimeMillis()); // option 1
-		CurrentDate = formDate.format(new Date(System.currentTimeMillis())); // option 2
+		CurrentDate = formDate.format(new Date(System.currentTimeMillis()-24*60*60*1000)); // option 2
 		return CurrentDate;
 	}
-
-	public static String DisplayCurrentDate_inYMD() {
-		String CurrentDate = null;
-		SimpleDateFormat formDate = new SimpleDateFormat("dd/MM/yyyy",Locale.ENGLISH);
-
-		// String strDate = formDate.format(System.currentTimeMillis()); // option 1
-		CurrentDate = formDate.format(new Date(System.currentTimeMillis())); // option 2
-		return CurrentDate;
-	}
-
-	public static boolean isDateExpired(String DMY_Date){
-		boolean result = true;
-
-		if(DMY_Date!=null && !DMY_Date.equalsIgnoreCase("")){
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			Date strDate = null;
-			try {
-				strDate = sdf.parse(DMY_Date);
-				if (System.currentTimeMillis() <= strDate.getTime()) {
-					result = false;
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-
-
-		}
-
-
-		return result;
-	}
-
 
 	public static String GetOneDayLessDate(String YMD_Date){
 		String OneDayLessDate = null;
@@ -1166,11 +1129,4 @@ public class CommonMethods
 		return Bitmap.createScaledBitmap(image, width, height, true);
 	}
 
-	public static String getBoolean(String isChecked){
-		if (isChecked.equalsIgnoreCase("yes")){
-			return "true";
-		}else{
-			return "false";
-		}
-	}
 }

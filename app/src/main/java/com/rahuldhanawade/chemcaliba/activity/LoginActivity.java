@@ -61,8 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         EdtEmail_Mobile = findViewById(R.id.EdtEmail_Mobile);
         EdtPassword = findViewById(R.id.EdtPassword);
 
-        EdtEmail_Mobile.setText("avi.vankar@gmail.com");
-        EdtPassword.setText("N8:2qp5uf");
+        EdtEmail_Mobile.setText("jeetendratyagi40@gmail.com");
+        EdtPassword.setText("M4)m1bxyr");
 
         linear_login = findViewById(R.id.linear_login);
         tv_sign_up = findViewById(R.id.tv_sign_up);

@@ -16,9 +16,12 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.rahuldhanawade.chemcaliba.R;
+import com.rahuldhanawade.chemcaliba.activity.EnrolledActivity;
 import com.rahuldhanawade.chemcaliba.activity.LoginActivity;
 import com.rahuldhanawade.chemcaliba.activity.MainActivity;
+import com.rahuldhanawade.chemcaliba.activity.OurCoursesActivity;
 import com.rahuldhanawade.chemcaliba.activity.SplashScreen;
+import com.rahuldhanawade.chemcaliba.activity.TestResultActivity;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, fetchToolbarTitle{
@@ -48,8 +51,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         TextView nav_header_userName = (TextView)hView.findViewById(R.id.nav_header_userName);
         TextView nav_user_email = (TextView)hView.findViewById(R.id.nav_Email);
 
-        nav_header_userName.setText("Rahul Dhanawade");
-        nav_user_email.setText("rd@test.com");
+        nav_header_userName.setText(UtilitySharedPreferences.getPrefs(getApplicationContext(),"full_name"));
+        nav_user_email.setText(UtilitySharedPreferences.getPrefs(getApplicationContext(),"emailid"));
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -65,18 +68,20 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if(id == R.id.nav_home){
+            Intent i=new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.animator.move_left, R.animator.move_right);
+            finish();
         } else if(id == R.id.nav_our_courses){
-            Intent i=new Intent(getApplicationContext(), MainActivity.class);
+            Intent i=new Intent(getApplicationContext(), OurCoursesActivity.class);
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
-            finish();
         }else if(id == R.id.nav_enrolled_courses) {
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            Intent i = new Intent(getApplicationContext(), EnrolledActivity.class);
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
-            finish();
         }else if(id == R.id.nav_test_results){
-            Intent i=new Intent(getApplicationContext(), MainActivity.class);
+            Intent i=new Intent(getApplicationContext(), TestResultActivity.class);
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
             finish();
