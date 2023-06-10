@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rahuldhanawade.chemcaliba.R;
-import com.rahuldhanawade.chemcaliba.activity.PDF_VideoPlayerActivity;
 
 import java.util.ArrayList;
 
