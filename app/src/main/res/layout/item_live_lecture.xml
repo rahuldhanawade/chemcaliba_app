@@ -29,7 +29,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="2021-01-21"
+            android:id="@+id/tv_valid_date_LL"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -70,7 +70,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="Web Premium : [XII - JEE] - Target Year - 2023-24"
+                        android:id="@+id/tv_course_title_LL"
                         android:textSize="14sp"
                         style="@style/TitleTextStyle"
                         android:layout_height="wrap_content"/>
@@ -93,7 +93,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textSize="14sp"
-                        android:text="Lecture [01- Part - 2] -Stereoisomerism"
+                        android:id="@+id/tv_video_title_LL"
                         style="@style/TitleTextStyle"
                         android:layout_height="wrap_content"/>
 
@@ -115,7 +115,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="XII - JEE"
+                        android:id="@+id/tv_course_category_name_LL"
                         android:textSize="14sp"
                         style="@style/TitleTextStyle"
                         android:layout_height="wrap_content"/>

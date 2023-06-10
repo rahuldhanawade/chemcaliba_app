@@ -22,7 +22,7 @@ import com.rahuldhanawade.chemcaliba.activity.CoursesDetailsActivity;
 
 import java.util.ArrayList;
 
-public class EnrolledAdapter  extends RecyclerView.Adapter<EnrolledAdapter.ViewHolder> {
+public class EnrolledAdapter extends RecyclerView.Adapter<EnrolledAdapter.ViewHolder> {
 
     private ArrayList<EnrolledPOJO> enrolledPOJOS;
     private Context context;

@@ -84,7 +84,6 @@ public class EnrolledActivity extends BaseActivity {
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
                     page++;
-                    page = page+1;
                     progressBar.setVisibility(View.VISIBLE);
                     GetEnrolledList(page,limit);
                 }

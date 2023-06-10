@@ -74,7 +74,30 @@
             android:paddingTop="20dp"
             android:layout_height="match_parent">
 
-            <include layout="@layout/item_live_lecture" />
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/nested_view_live_lectures">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:id="@+id/recy_live_lectures"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_height="wrap_content"/>
+
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:id="@+id/progress_bar_live_lectures"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
 
