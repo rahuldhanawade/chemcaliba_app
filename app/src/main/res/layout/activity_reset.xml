@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             style="@style/TitleTextStyle"
             android:text="Do not remember your password?"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:padding="10dp"
             android:layout_height="wrap_content"/>
 
@@ -56,22 +56,33 @@
             android:layout_marginRight="5dp"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_height="wrap_content"
-                app:shapeAppearance="@style/RoundedInputTextBox"
-                android:hint="Enter Email id*">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:inputType="textEmailAddress"
-                    android:id="@+id/edt_email_id_RA"
-                    android:maxLength="10"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Enter Email ID*"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:paddingLeft="10dp"
+                    style="@style/TitleTextStyle"
                     android:layout_height="wrap_content"/>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/edt_email_R"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:hint="Enter Email ID*"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="50"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,7 +97,7 @@
                     style="@style/TitleTextStyle"
                     android:gravity="left"
                     android:paddingLeft="10dp"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:text="Login?"
                     android:textColor="@color/colorSecondary"
                     android:layout_height="wrap_content"/>
@@ -97,7 +108,7 @@
                     style="@style/TitleTextStyle"
                     android:gravity="right"
                     android:paddingRight="10dp"
-                    android:textSize="20dp"
+                    android:textSize="18sp"
                     android:text="Sign Up?"
                     android:textColor="@color/black"
                     android:layout_height="wrap_content"/>
