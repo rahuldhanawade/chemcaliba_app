@@ -8,30 +8,24 @@
     android:background="@color/colorPrimary"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:gravity="center_vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/appbar_menu_reset"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:src="@drawable/ic_left_arrow"
-            android:layout_marginRight="20dp"
-            android:layout_height="wrap_content"
-            app:tint="@color/white" />
-
-        <TextView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_reset"
+            app:titleTextColor="@color/white"
+            app:theme="@style/ToolbarStyle"
+            app:navigationIcon="@drawable/ic_left_arrow"
+            app:popupTheme="@style/AppTheme.AppBarOverlay"
             android:layout_width="match_parent"
-            style="@style/TitleTextStyle"
-            android:text="Forgot Password"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"/>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorAccent" />
 
-    </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,68 +46,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_margin="10dp"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Enter Email ID*"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingLeft="10dp"
+                style="@style/TitleTextStyle"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/edt_email_R"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:text="Enter Email ID*"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:paddingLeft="10dp"
-                    style="@style/TitleTextStyle"
-                    android:layout_height="wrap_content"/>
-
-                <EditText
-                    android:id="@+id/edt_email_R"
-                    style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:hint="Enter Email ID*"
-                    android:inputType="textEmailAddress"
-                    android:maxLength="50"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginTop="30dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    style="@style/TitleTextStyle"
-                    android:gravity="left"
-                    android:paddingLeft="10dp"
-                    android:textSize="18dp"
-                    android:text="Login?"
-                    android:textColor="@color/colorSecondary"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    style="@style/TitleTextStyle"
-                    android:gravity="right"
-                    android:paddingRight="10dp"
-                    android:textSize="18sp"
-                    android:text="Sign Up?"
-                    android:textColor="@color/black"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
+                android:layout_height="42dp"
+                android:hint="Enter Email ID*"
+                android:inputType="textEmailAddress"
+                android:maxLength="50"/>
 
         </LinearLayout>
 
@@ -121,6 +73,7 @@
             android:layout_width="match_parent"
             android:layout_margin="30dp"
             android:elevation="10dp"
+            android:id="@+id/linear_submit"
             android:background="@drawable/button_drawable"
             android:layout_height="wrap_content">
 
