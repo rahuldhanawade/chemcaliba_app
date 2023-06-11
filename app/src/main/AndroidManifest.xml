@@ -22,6 +22,9 @@
         android:theme="@style/Theme.Chemcaliba"
         tools:targetApi="31">
         <activity
+            android:name=".activity.AnnouncementsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.TestScheduleActivity"
             android:exported="false"
             android:screenOrientation="nosensor" />

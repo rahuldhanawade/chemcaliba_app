@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.rahuldhanawade.chemcaliba.R;
+import com.rahuldhanawade.chemcaliba.activity.AnnouncementsActivity;
 import com.rahuldhanawade.chemcaliba.activity.EnrolledActivity;
 import com.rahuldhanawade.chemcaliba.activity.LoginActivity;
 import com.rahuldhanawade.chemcaliba.activity.MainActivity;
@@ -86,17 +87,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             Intent i=new Intent(getApplicationContext(), TestResultActivity.class);
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
-            finish();
         }else if(id == R.id.nav_test_schedule){
             Intent i=new Intent(getApplicationContext(), TestScheduleActivity.class);
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
-            finish();
         }else if(id == R.id.nav_announccments){
-            Intent i=new Intent(getApplicationContext(), MainActivity.class);
+            Intent i=new Intent(getApplicationContext(), AnnouncementsActivity.class);
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
-            finish();
         }else if(id == R.id.nav_pt_meeting){
             Intent i=new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);

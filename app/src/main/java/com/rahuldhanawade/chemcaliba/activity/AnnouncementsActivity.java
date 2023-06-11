@@ -4,7 +4,6 @@ import static com.rahuldhanawade.chemcaliba.RestClient.RestClient.ROOT_URL;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastError;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastInfo;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,10 +32,8 @@ import com.android.volley.toolbox.Volley;
 import com.rahuldhanawade.chemcaliba.R;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.BaseActivity;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.FetchToolTitle;
-import com.rahuldhanawade.chemcaliba.adapter.TestResultAdapter;
-import com.rahuldhanawade.chemcaliba.adapter.TestResultPOJO;
-import com.rahuldhanawade.chemcaliba.adapter.TestScheduleAdapter;
-import com.rahuldhanawade.chemcaliba.adapter.TestSchedulePOJO;
+import com.rahuldhanawade.chemcaliba.adapter.AnnouncementsPOJO;
+import com.rahuldhanawade.chemcaliba.adapter.AnnouncementsAdapter;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
 import org.json.JSONArray;
@@ -47,37 +44,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestScheduleActivity extends BaseActivity {
+public class AnnouncementsActivity extends BaseActivity {
 
     NestedScrollView nestedScrollView;
     RecyclerView recyclerView;
     ProgressBar progressBar;
-    ArrayList<TestSchedulePOJO> testSchedulePOJOS = new ArrayList<>();
-    TestScheduleAdapter adapter;
+    ArrayList<AnnouncementsPOJO> announcementsPOJOS = new ArrayList<>();
+    AnnouncementsAdapter adapter;
     int page = 1, limit = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ViewStub stub = (ViewStub) findViewById(R.id.base_layout);
-        stub.setLayoutResource(R.layout.activity_test_schedule);
+        stub.setLayoutResource(R.layout.activity_announcements);
         View inflated = stub.inflate();
 
-        FetchToolTitle.fetchTitle(TestScheduleActivity.this,"Test Schedule");
+        FetchToolTitle.fetchTitle(AnnouncementsActivity.this,"Announcements");
 
         Init();
     }
 
     private void Init() {
-        nestedScrollView=findViewById(R.id.nested_view_test_schedule);
-        recyclerView=findViewById(R.id.recy_test_schedule);
-        progressBar=findViewById(R.id.progress_bar_test_schedule);
+        nestedScrollView=findViewById(R.id.nested_view_announcements);
+        recyclerView=findViewById(R.id.recy_announcements);
+        progressBar=findViewById(R.id.progress_bar_announcements);
 
-        adapter = new TestScheduleAdapter(TestScheduleActivity.this,testSchedulePOJOS);
+        adapter = new AnnouncementsAdapter(AnnouncementsActivity.this,announcementsPOJOS);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        GetTestScheduleList(page,limit);
+        GetAnnouncements(page,limit);
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -85,22 +82,22 @@ public class TestScheduleActivity extends BaseActivity {
                 if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
                     page++;
                     progressBar.setVisibility(View.VISIBLE);
-                    GetTestScheduleList(page,limit);
+                    GetAnnouncements(page,limit);
                 }
             }
         });
-        
     }
 
-    private void GetTestScheduleList(int page, int limit) {
-        String TestSchedule_URL = ROOT_URL+"test_schedules";
+    private void GetAnnouncements(int page, int limit) {
 
-        Log.d("TestSchedule_URL",""+TestSchedule_URL);
+        String Announcements_URL = ROOT_URL+"announcements";
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, TestSchedule_URL, new Response.Listener<String>() {
+        Log.d("Announcements_URL",""+Announcements_URL);
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, Announcements_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("TestSchedule_URL",""+response);
+                Log.d("Announcements_URL",""+response);
                 progressBar.setVisibility(View.GONE);
                 try {
                     JSONObject responseObj=new JSONObject(response);
@@ -111,35 +108,34 @@ public class TestScheduleActivity extends BaseActivity {
                         JSONArray data_array=new JSONArray(courseData);
                         for(int k=0; k< data_array.length();k++){
                             JSONObject dataObj=data_array.getJSONObject(k);
-                            TestSchedulePOJO testSchedulePOJO1 = new TestSchedulePOJO();
-                            testSchedulePOJO1.setTestScheduleMasterId(dataObj.getInt("test_schedule_master_id"));
-                            testSchedulePOJO1.setTestScheduleTitle(dataObj.getString("test_schedule_title"));
-                            testSchedulePOJO1.setCreatedDate(dataObj.getString("created_date"));
-                            testSchedulePOJO1.setCourseCategoryName(dataObj.getString("course_category_name"));
-                            testSchedulePOJO1.setTestScheduleDateTime(dataObj.getString("test_schedule_date_time"));
-                            testSchedulePOJO1.setTestScheduleLink(dataObj.getString("test_schedule_link"));
-                            testSchedulePOJOS.add(testSchedulePOJO1);
+                            AnnouncementsPOJO announcementsPOJO1 = new AnnouncementsPOJO();
+                            announcementsPOJO1.setAnnouncementMasterId(dataObj.getInt("announcement_master_id"));
+                            announcementsPOJO1.setAnnouncementTitle(dataObj.getString("announcement_title"));
+                            announcementsPOJO1.setAnnouncementDescription(dataObj.getString("announcement_description"));
+                            announcementsPOJO1.setCreatedDate(dataObj.getString("created_date"));
+                            announcementsPOJO1.setCourseCategoryName(dataObj.getString("course_category_name"));
+                            announcementsPOJOS.add(announcementsPOJO1);
                         }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter = new TestScheduleAdapter(TestScheduleActivity.this,testSchedulePOJOS);
+                adapter = new AnnouncementsAdapter(AnnouncementsActivity.this,announcementsPOJOS);
                 recyclerView.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    DisplayToastError(TestScheduleActivity.this,"Server is not connected to internet.");
+                    DisplayToastError(AnnouncementsActivity.this,"Server is not connected to internet.");
                 } else if (error instanceof AuthFailureError) {
-                    DisplayToastError(TestScheduleActivity.this,"Server couldn't find the authenticated request.");
+                    DisplayToastError(AnnouncementsActivity.this,"Server couldn't find the authenticated request.");
                 } else if (error instanceof ServerError) {
-                    DisplayToastError(TestScheduleActivity.this,"Server is not responding.Please try Again Later");
+                    DisplayToastError(AnnouncementsActivity.this,"Server is not responding.Please try Again Later");
                 } else if (error instanceof NetworkError) {
-                    DisplayToastError(TestScheduleActivity.this,"Your device is not connected to internet.");
+                    DisplayToastError(AnnouncementsActivity.this,"Your device is not connected to internet.");
                 } else if (error instanceof ParseError) {
-                    DisplayToastError(TestScheduleActivity.this,"Parse Error (because of invalid json or xml).");
+                    DisplayToastError(AnnouncementsActivity.this,"Parse Error (because of invalid json or xml).");
                 }
             }
         }){
@@ -151,7 +147,7 @@ public class TestScheduleActivity extends BaseActivity {
                 map.put("limit", String.valueOf(limit));
                 map.put("page_num", String.valueOf(page));
                 map.put("searchTerm", "");
-                Log.d("TestSchedule_URLData",""+map.toString());
+                Log.d("Announcements_URLData",""+map.toString());
                 return map;
             }
 
@@ -166,7 +162,7 @@ public class TestScheduleActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(TestScheduleActivity.this, MainActivity.class);
+        Intent i = new Intent(AnnouncementsActivity.this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
