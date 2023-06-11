@@ -137,12 +137,11 @@ public class MyValidator {
             return false;
         }else {
             //$specialCharacters = "-@%\\\\[\\\\}+'!/#$^?:;,\\\\(\\\"\\\\)~`.*=&\\\\{>\\\\]<_";
-            Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@%!/#$^?*=&])(?=\\S+$).{6,20}$");
+            Pattern pattern = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
 
             Matcher matcher = pattern.matcher(pass);
 
             if (!matcher.matches()) {
-                editText.setError("Please Enter Strong Password.");
                 return false;
             }else{
                 editText.setError(null);
