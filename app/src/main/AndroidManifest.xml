@@ -22,9 +22,13 @@
         android:theme="@style/Theme.Chemcaliba"
         tools:targetApi="31">
         <activity
+            android:name=".activity.TestScheduleActivity"
+            android:exported="false"
+            android:screenOrientation="nosensor" />
+        <activity
             android:name=".activity.ProfileActivity"
             android:exported="false"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".activity.CoursesDetailsActivity"
             android:exported="false"

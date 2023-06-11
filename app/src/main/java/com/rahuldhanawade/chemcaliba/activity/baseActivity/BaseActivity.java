@@ -23,6 +23,7 @@ import com.rahuldhanawade.chemcaliba.activity.OurCoursesActivity;
 import com.rahuldhanawade.chemcaliba.activity.ProfileActivity;
 import com.rahuldhanawade.chemcaliba.activity.SplashScreen;
 import com.rahuldhanawade.chemcaliba.activity.TestResultActivity;
+import com.rahuldhanawade.chemcaliba.activity.TestScheduleActivity;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, fetchToolbarTitle{
@@ -87,7 +88,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
             finish();
         }else if(id == R.id.nav_test_schedule){
-            Intent i=new Intent(getApplicationContext(), MainActivity.class);
+            Intent i=new Intent(getApplicationContext(), TestScheduleActivity.class);
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
             finish();
