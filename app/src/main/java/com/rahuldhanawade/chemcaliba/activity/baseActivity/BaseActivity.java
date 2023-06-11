@@ -18,9 +18,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.rahuldhanawade.chemcaliba.R;
 import com.rahuldhanawade.chemcaliba.activity.AnnouncementsActivity;
 import com.rahuldhanawade.chemcaliba.activity.EnrolledActivity;
+import com.rahuldhanawade.chemcaliba.activity.HolidayActivity;
 import com.rahuldhanawade.chemcaliba.activity.LoginActivity;
 import com.rahuldhanawade.chemcaliba.activity.MainActivity;
 import com.rahuldhanawade.chemcaliba.activity.OurCoursesActivity;
+import com.rahuldhanawade.chemcaliba.activity.PTActivity;
 import com.rahuldhanawade.chemcaliba.activity.ProfileActivity;
 import com.rahuldhanawade.chemcaliba.activity.SplashScreen;
 import com.rahuldhanawade.chemcaliba.activity.TestResultActivity;
@@ -96,15 +98,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
         }else if(id == R.id.nav_pt_meeting){
-            Intent i=new Intent(getApplicationContext(), MainActivity.class);
+            Intent i=new Intent(getApplicationContext(), PTActivity.class);
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
-            finish();
         }else if(id == R.id.nav_holidays){
-            Intent i=new Intent(getApplicationContext(), MainActivity.class);
+            Intent i=new Intent(getApplicationContext(), HolidayActivity.class);
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
-            finish();
         }else if(id == R.id.nav_profile){
             Intent i=new Intent(getApplicationContext(), ProfileActivity.class);
             startActivity(i);
