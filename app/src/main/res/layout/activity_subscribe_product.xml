@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SubscribeProductActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/appbar_menu_SP"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_subscribe_SP"
+            app:titleTextColor="@color/white"
+            app:theme="@style/ToolbarStyle"
+            app:navigationIcon="@drawable/ic_left_arrow"
+            app:popupTheme="@style/AppTheme.AppBarOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorAccent" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/appbar_menu_SP"
+        android:layout_above="@+id/linear_buy_view"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:background="@color/colorPrimary"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                app:cardCornerRadius="10dp"
+                android:elevation="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="-50dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:id="@+id/iv_course_img_SP"
+                    android:scaleType="centerInside"
+                    android:adjustViewBounds="true"
+                    android:layout_height="200dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/main_activity_design"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="70dp"
+                    android:layout_height="match_parent">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_margin="10dp"
+                        app:cardCornerRadius="10dp"
+                        android:elevation="10dp"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                style="@style/TitleTextStyle"
+                                android:id="@+id/tv_product_name_SP"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:textColor="@color/colorSecondary"
+                                android:textSize="20sp"
+                                android:layout_height="wrap_content"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_margin="5dp"
+                                android:weightSum="2"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Unit Price (₹) :"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    style="@style/TitleTextStyle"
+                                    android:layout_height="wrap_content"/>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:textSize="14sp"
+                                    android:id="@+id/tv_unit_price_SP"
+                                    style="@style/TitleTextStyle"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_margin="5dp"
+                                android:background="@color/colorSecondary"
+                                android:layout_height="1dp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_margin="5dp"
+                                android:weightSum="2"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:weightSum="2"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:text="Start Date :"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        style="@style/TitleTextStyle"
+                                        android:layout_height="wrap_content"/>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:textSize="14sp"
+                                        android:id="@+id/tv_course_start_date_SP"
+                                        style="@style/TitleTextStyle"
+                                        android:layout_height="wrap_content"/>
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_margin="5dp"
+                                    android:background="@color/colorSecondary"
+                                    android:layout_height="match_parent"/>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:weightSum="2"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:text="End Date :"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        style="@style/TitleTextStyle"
+                                        android:layout_height="wrap_content"/>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:textSize="14sp"
+                                        android:id="@+id/tv_course_end_date_SP"
+                                        style="@style/TitleTextStyle"
+                                        android:layout_height="wrap_content"/>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_margin="5dp"
+                                android:background="@color/colorSecondary"
+                                android:layout_height="1dp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_margin="5dp"
+                                android:weightSum="2"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:weightSum="2"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:text="Duration :"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        style="@style/TitleTextStyle"
+                                        android:layout_height="wrap_content"/>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:textSize="14sp"
+                                        android:id="@+id/tv_duration_SP"
+                                        style="@style/TitleTextStyle"
+                                        android:layout_height="wrap_content"/>
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_margin="5dp"
+                                    android:background="@color/colorSecondary"
+                                    android:layout_height="match_parent"/>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:weightSum="2"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:text="Valid Til :"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        style="@style/TitleTextStyle"
+                                        android:layout_height="wrap_content"/>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:textSize="14sp"
+                                        android:id="@+id/tv_valid_date_SP"
+                                        style="@style/TitleTextStyle"
+                                        android:layout_height="wrap_content"/>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_margin="5dp"
+                                android:background="@color/colorSecondary"
+                                android:layout_height="1dp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_margin="5dp"
+                                android:weightSum="2"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Discount Amt :"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    style="@style/TitleTextStyle"
+                                    android:layout_height="wrap_content"/>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:textSize="14sp"
+                                    android:id="@+id/tv_discount_SP"
+                                    style="@style/TitleTextStyle"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_margin="5dp"
+                                android:background="@color/colorSecondary"
+                                android:layout_height="1dp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_margin="5dp"
+                                android:weightSum="2"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Total Amt :"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    style="@style/TitleTextStyle"
+                                    android:layout_height="wrap_content"/>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorSecondary"
+                                    android:id="@+id/tv_total_SP"
+                                    style="@style/TitleTextStyle"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_margin="10dp"
+                        app:cardCornerRadius="10dp"
+                        android:elevation="10dp"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:weightSum="10"
+                                android:gravity="center_vertical"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="7"
+                                    android:orientation="vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_height="wrap_content">
+
+                                    <EditText
+                                        android:id="@+id/edt_coupon_SP"
+                                        style="@style/EditTextStyle"
+                                        android:hint="Enter Coupon Code"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="42dp"
+                                        android:inputType="text"
+                                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                                        android:maxLength="10" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="3"
+                                    android:id="@+id/linear_coupon_SP"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/card_corners"
+                                    android:orientation="horizontal"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:text="Apply"
+                                        android:gravity="center"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/white"
+                                        style="@style/TitleTextStyle"
+                                        android:layout_height="match_parent"/>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:text="Remove"
+                                android:visibility="gone"
+                                android:id="@+id/tv_remove_SP"
+                                android:gravity="center"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                style="@style/TitleTextStyle"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/linear_buy_view"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:elevation="10dp"
+            android:id="@+id/linear_buy_now"
+            android:background="@drawable/button_drawable"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                style="@style/TitleTextStyle"
+                android:text="Pay Now"
+                android:layout_margin="15dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

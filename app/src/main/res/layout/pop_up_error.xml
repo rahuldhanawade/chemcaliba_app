@@ -18,8 +18,9 @@
             android:layout_width="70dp"
             android:id="@+id/img_show"
             android:layout_marginTop="15dp"
-            android:src="@drawable/ic_error_new"
-            android:layout_height="70dp"/>
+            android:src="@drawable/ic_info"
+            android:layout_height="70dp"
+            app:tint="@color/colorAccent" />
 
         <TextView
             android:layout_width="match_parent"
@@ -33,14 +34,15 @@
 
         <TextView
             android:id="@+id/btn_ok_pop_error"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
+            android:padding="10dp"
             android:background="@drawable/button_drawable"
-            android:text="OK" />
+            android:gravity="center"
+            android:text="OK"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

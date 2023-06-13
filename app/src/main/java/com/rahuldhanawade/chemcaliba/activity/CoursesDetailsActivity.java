@@ -106,6 +106,15 @@ public class CoursesDetailsActivity extends BaseActivity {
             linear_buy_view.setVisibility(View.VISIBLE);
         }
 
+        linear_buy_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CoursesDetailsActivity.this, SubscribeProductActivity.class);
+                i.putExtra("product_id",course_id);
+                startActivity(i);
+            }
+        });
+
         GetCourseDetails();
     }
 

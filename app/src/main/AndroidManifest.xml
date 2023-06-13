@@ -22,6 +22,10 @@
         android:theme="@style/Theme.Chemcaliba"
         tools:targetApi="31">
         <activity
+            android:name=".activity.SubscribeProductActivity"
+            android:exported="false"
+            android:screenOrientation="nosensor" />
+        <activity
             android:name=".activity.ChangePasswordActivity"
             android:exported="false"
             android:screenOrientation="nosensor" />
@@ -32,7 +36,7 @@
         <activity
             android:name=".activity.PTActivity"
             android:exported="false"
-            android:screenOrientation="nosensor"  />
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".activity.AnnouncementsActivity"
             android:exported="false"

@@ -1,5 +1,7 @@
 package com.rahuldhanawade.chemcaliba.utills;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,11 +15,15 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.rahuldhanawade.chemcaliba.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -74,6 +80,27 @@ public class CommonMethods
 	public static void DisplayToastInfo(Context context, String message)
 	{
 		Toasty.info(context, message, Toast.LENGTH_SHORT).show();;
+	}
+
+	public static void DisplayPopUpInfo(Activity activity, String message)
+	{
+		final Dialog dialog = new Dialog(activity);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setCancelable(false);
+		dialog.setContentView(R.layout.pop_up_error);
+
+		TextView tv_pop_up_error = (TextView) dialog.findViewById(R.id.tv_pop_up_error);
+		tv_pop_up_error.setText(message);
+
+		TextView btn_ok_pop_error = (TextView) dialog.findViewById(R.id.btn_ok_pop_error);
+		btn_ok_pop_error.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		dialog.show();
 	}
 
 	public static String Base64_Encode(String input_string){
