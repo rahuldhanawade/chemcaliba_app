@@ -1,5 +1,7 @@
 package com.rahuldhanawade.chemcaliba.adapter;
 
+import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastError;
+
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -65,8 +68,18 @@ public class TestScheduleAdapter extends RecyclerView.Adapter<TestScheduleAdapte
                     TestSchedulePOJO testSchedulePOJO1 = testSchedulePOJOS.get(itemPosition);
                     String scheduleLink = testSchedulePOJO1.getTestScheduleLink();
                     Log.d("TAG", "onClick: "+scheduleLink);
-                    Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(scheduleLink));
-                    context.startActivity(browse);
+                    if(URLUtil.isValidUrl(scheduleLink)){
+                        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(scheduleLink));
+                        Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(scheduleLink));
+                        try {
+                            context.startActivity(appIntent);
+                        } catch (ActivityNotFoundException ex) {
+                            context.startActivity(webIntent);
+                        }
+                    }else{
+                        DisplayToastError(context,"Sorry no url found please try later");
+                    }
                 }
             });
         }

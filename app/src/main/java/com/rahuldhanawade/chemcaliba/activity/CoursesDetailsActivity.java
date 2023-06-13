@@ -1,17 +1,27 @@
 package com.rahuldhanawade.chemcaliba.activity;
 
 import static com.rahuldhanawade.chemcaliba.RestClient.RestClient.ROOT_URL;
+import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToast;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastError;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastSuccess;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.WindowManager;
+import android.webkit.URLUtil;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -28,6 +38,8 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.rahuldhanawade.chemcaliba.R;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.BaseActivity;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.FetchToolTitle;
@@ -35,6 +47,7 @@ import com.rahuldhanawade.chemcaliba.activity.baseActivity.fetchToolbarTitle;
 import com.rahuldhanawade.chemcaliba.utills.LoadingDialog;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,6 +60,8 @@ public class CoursesDetailsActivity extends BaseActivity {
 
     TextView tv_course_active_cd,tv_course_category_name_cd,tv_course_category_info_cd,tv_course_name_cd,tv_course_start_date_cd,
             tv_course_end_date_cd,tv_duration_cd,tv_valid_date_cd;
+    LinearLayout linear_video_list,linear_course_list;
+    ImageView iv_course_img;
     String course_id = "";
 
     @Override
@@ -74,11 +89,17 @@ public class CoursesDetailsActivity extends BaseActivity {
         tv_course_end_date_cd = findViewById(R.id.tv_course_end_date_cd);
         tv_duration_cd = findViewById(R.id.tv_duration_cd);
         tv_valid_date_cd = findViewById(R.id.tv_valid_date_cd);
-        
+
+        iv_course_img = findViewById(R.id.iv_course_img);
+
+        linear_video_list = findViewById(R.id.linear_video_list);
+        linear_course_list = findViewById(R.id.linear_course_list);
+
         GetCourseDetails();
     }
 
     private void GetCourseDetails() {
+
         loadingDialog.startLoadingDialog();
 
         String CourseDetails_URL = ROOT_URL+"view_course_details";
@@ -103,6 +124,7 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 String course_start_date = CourseDetailsObj.getString("course_start_date");
                                 String course_end_date = CourseDetailsObj.getString("course_end_date");
                                 String course_duration = CourseDetailsObj.getString("course_duration_number_of_days");
+                                String course_img_url = CourseDetailsObj.getString("course_img_url");
 
                                 if(is_course_expired){
                                     tv_course_active_cd.setVisibility(View.VISIBLE);
@@ -116,6 +138,19 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 tv_course_end_date_cd.setText(course_end_date);
                                 tv_duration_cd.setText(course_duration);
                                 tv_valid_date_cd.setText(course_end_date);
+
+                                Glide.with(getApplicationContext())
+                                        .applyDefaultRequestOptions(new RequestOptions()
+                                                .placeholder(R.drawable.logo_chemcaliba)
+                                                .error(R.drawable.logo_chemcaliba))
+                                        .load(course_img_url)
+                                        .into(iv_course_img);
+
+                                JSONArray CourseVideoDetailsArray = responseObj.getJSONArray("course_video_details");
+                                setVideoLinks(CourseVideoDetailsArray);
+
+                                JSONArray CourseChapterDetailsArray = responseObj.getJSONArray("course_chapter_details");
+                                setCourseDocLinks(CourseChapterDetailsArray);
 
                             }else{
                                 DisplayToastError(CoursesDetailsActivity.this,message);
@@ -159,5 +194,229 @@ public class CoursesDetailsActivity extends BaseActivity {
         stringRequest.setRetryPolicy(policy);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    private void setVideoLinks(JSONArray courseVideoDetailsArray) {
+
+        if(courseVideoDetailsArray.length() > 0){
+            try {
+                LayoutInflater maininflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = maininflater.inflate(R.layout.layout_item_title, null);
+                ImageView iv_exp_arrow = rowView.findViewById(R.id.iv_exp_arrow);
+                TextView tv_Exp_title = rowView.findViewById(R.id.tv_Exp_title);
+                LinearLayout linear_exp_header = rowView.findViewById(R.id.linear_exp_header);
+                LinearLayout linear_exp_video_links = rowView.findViewById(R.id.linear_exp_video_links);
+
+                linear_exp_header.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(linear_exp_video_links.getVisibility() == View.VISIBLE){
+                            iv_exp_arrow.setImageResource(R.drawable.ic_down_circle);
+                            linear_exp_video_links.setVisibility(View.GONE);
+                        }else{
+                            iv_exp_arrow.setImageResource(R.drawable.ic_circle_up);
+                            linear_exp_video_links.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                tv_Exp_title.setText("Video Lecture Links");
+
+                for(int i=0; i< courseVideoDetailsArray.length();i++){
+                    JSONObject data_obj = courseVideoDetailsArray.getJSONObject(i);
+                    String video_title = data_obj.getString("video_title");
+                    String video_link = data_obj.getString("video_link");
+                    String created_date = data_obj.getString("created_date");
+
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View innerrowView = inflater.inflate(R.layout.layout_item_list, null);
+
+                    LinearLayout linear_item_lay = innerrowView.findViewById(R.id.linear_item_lay);
+                    TextView tv_title_lay = innerrowView.findViewById(R.id.tv_title_lay);
+                    TextView tv_created_date_lay = innerrowView.findViewById(R.id.tv_created_date_lay);
+
+                    tv_title_lay.setText(video_title);
+                    tv_created_date_lay.setText(created_date);
+
+                    linear_item_lay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(URLUtil.isValidUrl(video_link)){
+                                Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(video_link));
+                                Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                                        Uri.parse(video_link));
+                                try {
+                                    startActivity(appIntent);
+                                } catch (ActivityNotFoundException ex) {
+                                    startActivity(webIntent);
+                                }
+                            }else{
+                                DisplayToastError(getApplicationContext(),"Sorry no url found please try later");
+                            }
+                        }
+                    });
+
+                    linear_exp_video_links.addView(innerrowView);
+
+                }
+
+                linear_video_list.addView(rowView);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void setCourseDocLinks(JSONArray courseChapterDetailsArray) {
+        if(courseChapterDetailsArray.length() > 0){
+            try {
+
+                for(int i=0; i< courseChapterDetailsArray.length();i++){
+                    JSONObject data_obj = courseChapterDetailsArray.getJSONObject(i);
+                    String chapter_name = data_obj.getString("chapter_name");
+                    JSONArray ChapterDocArray = data_obj.getJSONArray("chapter_doc");
+                    JSONArray SubChapterArray = data_obj.getJSONArray("sub_chapters");
+
+                    LayoutInflater maininflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View rowView = maininflater.inflate(R.layout.layout_item_title, null);
+
+                    ImageView iv_exp_arrow = rowView.findViewById(R.id.iv_exp_arrow);
+                    TextView tv_Exp_title = rowView.findViewById(R.id.tv_Exp_title);
+                    LinearLayout linear_exp_header = rowView.findViewById(R.id.linear_exp_header);
+                    LinearLayout linear_exp_video_links = rowView.findViewById(R.id.linear_exp_video_links);
+                    LinearLayout linear_exp_subchap_links = rowView.findViewById(R.id.linear_exp_subchap_links);
+                    linear_exp_header.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(linear_exp_video_links.getVisibility() == View.VISIBLE){
+                                iv_exp_arrow.setImageResource(R.drawable.ic_down_circle);
+                                linear_exp_video_links.setVisibility(View.GONE);
+                                linear_exp_subchap_links.setVisibility(View.GONE);
+                            }else{
+                                iv_exp_arrow.setImageResource(R.drawable.ic_circle_up);
+                                linear_exp_video_links.setVisibility(View.VISIBLE);
+                                linear_exp_subchap_links.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+
+                    tv_Exp_title.setText(chapter_name);
+
+                    for(int j=0; j< ChapterDocArray.length();j++){
+                        JSONObject Chapobj = ChapterDocArray.getJSONObject(j);
+                        String document_title = Chapobj.getString("document_title");
+                        String document_file = Chapobj.getString("document_file");
+                        String doc_created_date = Chapobj.getString("doc_created_date");
+
+                        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View innerrowView = inflater.inflate(R.layout.layout_item_list, null);
+
+                        LinearLayout linear_item_lay = innerrowView.findViewById(R.id.linear_item_lay);
+                        TextView tv_title_lay = innerrowView.findViewById(R.id.tv_title_lay);
+                        TextView tv_created_date_lay = innerrowView.findViewById(R.id.tv_created_date_lay);
+
+                        tv_title_lay.setText(document_title);
+                        tv_created_date_lay.setText(doc_created_date);
+
+//                        linear_item_lay.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                if(URLUtil.isValidUrl(document_file)){
+//                                    Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(document_file));
+//                                    Intent webIntent = new Intent(Intent.ACTION_VIEW,
+//                                            Uri.parse(document_file));
+//                                    try {
+//                                        startActivity(appIntent);
+//                                    } catch (ActivityNotFoundException ex) {
+//                                        startActivity(webIntent);
+//                                    }
+//                                }else{
+//                                    DisplayToastError(getApplicationContext(),"Sorry no url found please try later");
+//                                }
+//                            }
+//                        });
+
+                        linear_exp_video_links.addView(innerrowView);
+
+                    }
+
+                    if(SubChapterArray.length() > 0){
+                        for(int h=0; h< SubChapterArray.length();h++){
+                            JSONObject subdata_obj = SubChapterArray.getJSONObject(h);
+                            String sub_chapter_name = subdata_obj.getString("sub_chapter_name");
+                            JSONArray SubChapterDocArray = subdata_obj.getJSONArray("sub_chapter_doc");
+
+                            LayoutInflater subinflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            View subrowView = subinflater.inflate(R.layout.layout_item_title, null);
+
+                            ImageView iv_exp_arrow_sub = subrowView.findViewById(R.id.iv_exp_arrow);
+                            TextView tv_Exp_title_sub = subrowView.findViewById(R.id.tv_Exp_title);
+                            LinearLayout linear_exp_header_sub = subrowView.findViewById(R.id.linear_exp_header);
+                            LinearLayout linear_exp_video_links_sub = subrowView.findViewById(R.id.linear_exp_video_links);
+                            linear_exp_header_sub.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+                            tv_Exp_title_sub.setText(sub_chapter_name);
+                            linear_exp_header_sub.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if(linear_exp_video_links_sub.getVisibility() == View.VISIBLE){
+                                        iv_exp_arrow_sub.setImageResource(R.drawable.ic_down_circle);
+                                        linear_exp_video_links_sub.setVisibility(View.GONE);
+                                    }else{
+                                        iv_exp_arrow_sub.setImageResource(R.drawable.ic_circle_up);
+                                        linear_exp_video_links_sub.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            });
+
+                            for(int j=0; j< SubChapterDocArray.length();j++){
+                                JSONObject Chapobj = SubChapterDocArray.getJSONObject(j);
+                                String document_title = Chapobj.getString("document_title");
+                                String document_file = Chapobj.getString("document_file");
+                                String doc_created_date = Chapobj.getString("sub_doc_created_date");
+
+                                LayoutInflater subInnerinflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                                View subinnerrowView = subInnerinflater.inflate(R.layout.layout_item_list, null);
+
+                                LinearLayout linear_item_lay = subinnerrowView.findViewById(R.id.linear_item_lay);
+                                TextView tv_title_lay = subinnerrowView.findViewById(R.id.tv_title_lay);
+                                TextView tv_created_date_lay = subinnerrowView.findViewById(R.id.tv_created_date_lay);
+
+                                tv_title_lay.setText(document_title);
+                                tv_created_date_lay.setText(doc_created_date);
+
+//                        linear_item_lay.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                if(URLUtil.isValidUrl(document_file)){
+//                                    Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(document_file));
+//                                    Intent webIntent = new Intent(Intent.ACTION_VIEW,
+//                                            Uri.parse(document_file));
+//                                    try {
+//                                        startActivity(appIntent);
+//                                    } catch (ActivityNotFoundException ex) {
+//                                        startActivity(webIntent);
+//                                    }
+//                                }else{
+//                                    DisplayToastError(getApplicationContext(),"Sorry no url found please try later");
+//                                }
+//                            }
+//                        });
+
+                                linear_exp_video_links_sub.addView(subinnerrowView);
+
+                            }
+
+                            linear_exp_subchap_links.addView(subrowView);
+                        }
+                    }
+
+                    linear_course_list.addView(rowView);
+
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
