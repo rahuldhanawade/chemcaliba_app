@@ -343,23 +343,19 @@ public class CoursesDetailsActivity extends BaseActivity {
                         tv_title_lay.setText(document_title);
                         tv_created_date_lay.setText(doc_created_date);
 
-//                        linear_item_lay.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                if(URLUtil.isValidUrl(document_file)){
-//                                    Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(document_file));
-//                                    Intent webIntent = new Intent(Intent.ACTION_VIEW,
-//                                            Uri.parse(document_file));
-//                                    try {
-//                                        startActivity(appIntent);
-//                                    } catch (ActivityNotFoundException ex) {
-//                                        startActivity(webIntent);
-//                                    }
-//                                }else{
-//                                    DisplayToastError(getApplicationContext(),"Sorry no url found please try later");
-//                                }
-//                            }
-//                        });
+                        linear_item_lay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if(URLUtil.isValidUrl(document_file)){
+                                    Intent i = new Intent(CoursesDetailsActivity.this,PDFViewActivity.class);
+                                    i.putExtra("pdf_file_name",document_title);
+                                    i.putExtra("pdf_file_url",document_file);
+                                    startActivity(i);
+                                }else{
+                                    DisplayToastError(getApplicationContext(),"Sorry no url found please try later");
+                                }
+                            }
+                        });
 
                         linear_exp_video_links.addView(innerrowView);
 
@@ -410,23 +406,19 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 tv_title_lay.setText(document_title);
                                 tv_created_date_lay.setText(doc_created_date);
 
-//                        linear_item_lay.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                if(URLUtil.isValidUrl(document_file)){
-//                                    Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(document_file));
-//                                    Intent webIntent = new Intent(Intent.ACTION_VIEW,
-//                                            Uri.parse(document_file));
-//                                    try {
-//                                        startActivity(appIntent);
-//                                    } catch (ActivityNotFoundException ex) {
-//                                        startActivity(webIntent);
-//                                    }
-//                                }else{
-//                                    DisplayToastError(getApplicationContext(),"Sorry no url found please try later");
-//                                }
-//                            }
-//                        });
+                                linear_item_lay.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if(URLUtil.isValidUrl(document_file)){
+                                            Intent i = new Intent(CoursesDetailsActivity.this,PDFViewActivity.class);
+                                            i.putExtra("pdf_file_name",document_title);
+                                            i.putExtra("pdf_file_url",document_file);
+                                            startActivity(i);
+                                        }else{
+                                            DisplayToastError(getApplicationContext(),"Sorry no url found please try later");
+                                        }
+                                    }
+                                });
 
                                 linear_exp_video_links_sub.addView(subinnerrowView);
 
