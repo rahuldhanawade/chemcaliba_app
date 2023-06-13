@@ -7,7 +7,9 @@ import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.setDateFormat;
 import static java.util.Objects.isNull;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.rahuldhanawade.chemcaliba.R;
+import com.rahuldhanawade.chemcaliba.activity.CoursesDetailsActivity;
 import com.rahuldhanawade.chemcaliba.activity.OurCoursesActivity;
 
 import java.util.ArrayList;
@@ -104,6 +107,22 @@ public class OurCourcesAdapter extends RecyclerView.Adapter<OurCourcesAdapter.Vi
             linear_buy_now = itemView.findViewById(R.id.linear_buy_now);
             linear_purchased = itemView.findViewById(R.id.linear_purchased);
             linear_expired = itemView.findViewById(R.id.linear_expired);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int itemPosition = getLayoutPosition();
+                    OurCourcesPOJO ourCourcesPOJO1 = ourCourcesPOJOS.get(itemPosition);
+                    String course_id = ourCourcesPOJO1.getCourseMasterId();
+                    boolean is_bought = ourCourcesPOJO1.getIsAlreadyBought();
+
+                    Log.d("TAG", "onClick: "+course_id+" "+is_bought);
+                    Intent i = new Intent(context, CoursesDetailsActivity.class);
+                    i.putExtra("course_id",course_id);
+                    i.putExtra("is_bought",is_bought ? "1" : "0");
+                    context.startActivity(i);
+                }
+            });
         }
     }
 }

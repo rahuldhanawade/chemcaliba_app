@@ -81,6 +81,7 @@ public class EnrolledAdapter extends RecyclerView.Adapter<EnrolledAdapter.ViewHo
                     Log.d("TAG", "onClick: "+course_id);
                     Intent i = new Intent(context, CoursesDetailsActivity.class);
                     i.putExtra("course_id",course_id);
+                    i.putExtra("is_bought","1");
                     context.startActivity(i);
                 }
             });

@@ -60,9 +60,9 @@ public class CoursesDetailsActivity extends BaseActivity {
 
     TextView tv_course_active_cd,tv_course_category_name_cd,tv_course_category_info_cd,tv_course_name_cd,tv_course_start_date_cd,
             tv_course_end_date_cd,tv_duration_cd,tv_valid_date_cd;
-    LinearLayout linear_video_list,linear_course_list;
+    LinearLayout linear_course_doclink_cd,linear_video_list,linear_course_list,linear_buy_view;
     ImageView iv_course_img;
-    String course_id = "";
+    String course_id = "", is_bought = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +76,7 @@ public class CoursesDetailsActivity extends BaseActivity {
         loadingDialog = new LoadingDialog(CoursesDetailsActivity.this);
 
         course_id = getIntent().getStringExtra("course_id");
+        is_bought = getIntent().getStringExtra("is_bought");
 
         Init();
     }
@@ -92,8 +93,18 @@ public class CoursesDetailsActivity extends BaseActivity {
 
         iv_course_img = findViewById(R.id.iv_course_img);
 
+        linear_course_doclink_cd = findViewById(R.id.linear_course_doclink_cd);
         linear_video_list = findViewById(R.id.linear_video_list);
         linear_course_list = findViewById(R.id.linear_course_list);
+        linear_buy_view = findViewById(R.id.linear_buy_view);
+
+        if(is_bought.equals("1")){
+            linear_course_doclink_cd.setVisibility(View.VISIBLE);
+            linear_buy_view.setVisibility(View.GONE);
+        }else if(is_bought.equals("0")){
+            linear_course_doclink_cd.setVisibility(View.GONE);
+            linear_buy_view.setVisibility(View.VISIBLE);
+        }
 
         GetCourseDetails();
     }
@@ -154,16 +165,21 @@ public class CoursesDetailsActivity extends BaseActivity {
 
                             }else{
                                 DisplayToastError(CoursesDetailsActivity.this,message);
+                                linear_course_doclink_cd.setVisibility(View.GONE);
+                                linear_buy_view.setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         loadingDialog.dismissDialog();
+                        linear_course_doclink_cd.setVisibility(View.GONE);
+                        linear_buy_view.setVisibility(View.GONE);
 
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                             DisplayToastError(CoursesDetailsActivity.this,"Server is not connected to internet.");
