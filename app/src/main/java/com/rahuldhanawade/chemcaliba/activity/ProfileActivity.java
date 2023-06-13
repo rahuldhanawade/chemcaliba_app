@@ -354,5 +354,6 @@ public class ProfileActivity extends BaseActivity {
         Intent i = new Intent(ProfileActivity.this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
+        overridePendingTransition(R.animator.left_right, R.animator.right_left);
     }
 }
