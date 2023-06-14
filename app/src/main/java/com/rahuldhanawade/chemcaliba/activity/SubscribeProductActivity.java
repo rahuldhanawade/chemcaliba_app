@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,8 +50,9 @@ public class SubscribeProductActivity extends AppCompatActivity {
 
     ImageView iv_course_img_SP;
     TextView tv_product_name_SP,tv_unit_price_SP,tv_course_start_date_SP,tv_course_end_date_SP,tv_duration_SP,
-            tv_valid_date_SP,tv_total_SP,tv_remove_SP;
-    LinearLayout linear_buy_now;
+            tv_valid_date_SP,tv_discount_SP,tv_total_SP,tv_remove_SP;
+    LinearLayout linear_coupon_SP,linear_buy_now;
+    EditText edt_coupon_SP;
     String Str_product_id = "";
 
     @Override
@@ -87,8 +89,30 @@ public class SubscribeProductActivity extends AppCompatActivity {
         tv_course_end_date_SP = findViewById(R.id.tv_course_end_date_SP);
         tv_duration_SP = findViewById(R.id.tv_duration_SP);
         tv_valid_date_SP = findViewById(R.id.tv_valid_date_SP);
+        tv_discount_SP = findViewById(R.id.tv_discount_SP);
         tv_total_SP = findViewById(R.id.tv_total_SP);
         tv_remove_SP = findViewById(R.id.tv_remove_SP);
+
+        tv_remove_SP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GetProductDetails();
+                tv_remove_SP.setVisibility(View.GONE);
+            }
+        });
+
+        edt_coupon_SP = findViewById(R.id.edt_coupon_SP);
+
+        linear_coupon_SP = findViewById(R.id.linear_coupon_SP);
+
+        linear_coupon_SP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(edt_coupon_SP.isEnabled()){
+                    ApplyCoupon();
+                }
+            }
+        });
 
         linear_buy_now = findViewById(R.id.linear_buy_now);
 
@@ -100,6 +124,82 @@ public class SubscribeProductActivity extends AppCompatActivity {
         });
 
         GetProductDetails();
+    }
+
+    private void ApplyCoupon() {
+
+        String Str_coup_code = edt_coupon_SP.getText().toString();
+
+        loadingDialog.startLoadingDialog();
+
+        String ApplyCoupon_URL = ROOT_URL+"apply_coupon";
+
+        Log.d("ApplyCoupon_URL",""+ApplyCoupon_URL);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ApplyCoupon_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loadingDialog.dismissDialog();
+                        try {
+                            JSONObject responseObj = new JSONObject(response);
+                            boolean status = responseObj.getBoolean("status");
+                            String message = responseObj.getString("message");
+                            if(status){
+                                JSONObject CouponResultObj = responseObj.getJSONObject("coupon_result");
+                                JSONObject CartDetailsObj = CouponResultObj.getJSONObject("cart_details");
+                                String discount_value = CartDetailsObj.getString("discount_value");
+                                String price_after_discount = CartDetailsObj.getString("price_after_discount");
+
+                                tv_discount_SP.setText("₹"+discount_value);
+                                tv_total_SP.setText("₹"+price_after_discount);
+
+                                edt_coupon_SP.setEnabled(false);
+                                tv_remove_SP.setVisibility(View.VISIBLE);
+
+                            }else{
+                                DisplayToastError(SubscribeProductActivity.this,message);
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loadingDialog.dismissDialog();
+
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            DisplayToastError(SubscribeProductActivity.this,"Server is not connected to internet.");
+                        } else if (error instanceof AuthFailureError) {
+                            DisplayToastError(SubscribeProductActivity.this,"Server couldn't find the authenticated request.");
+                        } else if (error instanceof ServerError) {
+                            DisplayToastError(SubscribeProductActivity.this,"Server is not responding.Please try Again Later");
+                        } else if (error instanceof NetworkError) {
+                            DisplayToastError(SubscribeProductActivity.this,"Your device is not connected to internet.");
+                        } else if (error instanceof ParseError) {
+                            DisplayToastError(SubscribeProductActivity.this,"Parse Error (because of invalid json or xml).");
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("student_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"student_id"));
+                map.put("emailid", UtilitySharedPreferences.getPrefs(getApplicationContext(),"emailid"));
+                map.put("product_id", Str_product_id);
+                map.put("coupon_code", Str_coup_code);
+                Log.d("ApplyCoupon_URLParam",""+map.toString());
+                return map;
+            }
+        };
+
+        int socketTimeout = 50000; //30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     private void GetProductDetails() {
@@ -121,7 +221,7 @@ public class SubscribeProductActivity extends AppCompatActivity {
                             String message = responseObj.getString("message");
                             if(status){
                                 JSONObject CartDetailsObj = responseObj.getJSONObject("cart_details");
-                                String course_image = CartDetailsObj.getString("course_image");
+                                String product_img_url = CartDetailsObj.getString("product_img_url");
                                 String product_name = CartDetailsObj.getString("product_name");
                                 String price_after_discount = CartDetailsObj.getString("price_after_discount");
                                 String course_start_date = CartDetailsObj.getString("course_start_date");
@@ -132,7 +232,7 @@ public class SubscribeProductActivity extends AppCompatActivity {
                                         .applyDefaultRequestOptions(new RequestOptions()
                                                 .placeholder(R.drawable.logo_chemcaliba)
                                                 .error(R.drawable.logo_chemcaliba))
-                                        .load(course_image)
+                                        .load(product_img_url)
                                         .into(iv_course_img_SP);
 
                                 tv_product_name_SP.setText(product_name);
@@ -141,7 +241,10 @@ public class SubscribeProductActivity extends AppCompatActivity {
                                 tv_course_end_date_SP.setText(course_end_date);
                                 tv_duration_SP.setText(course_duration_number_of_days);
                                 tv_valid_date_SP.setText(course_end_date);
-                                tv_total_SP.setText(price_after_discount);
+                                tv_total_SP.setText("₹"+price_after_discount);
+                                tv_discount_SP.setText("");
+                                edt_coupon_SP.setEnabled(true);
+                                edt_coupon_SP.setText("");
 
                             }else{
                                 DisplayToastError(SubscribeProductActivity.this,message);

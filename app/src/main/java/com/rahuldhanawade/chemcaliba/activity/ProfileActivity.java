@@ -154,6 +154,8 @@ public class ProfileActivity extends BaseActivity {
                                 DisplayToastSuccess(ProfileActivity.this,message);
                                 setEnableEditText(false);
                                 GetProfileData();
+                                linear_active_update.setVisibility(View.VISIBLE);
+                                linear_update_details.setVisibility(View.GONE);
                             }else{
                                 DisplayToastError(ProfileActivity.this,message);
                             }

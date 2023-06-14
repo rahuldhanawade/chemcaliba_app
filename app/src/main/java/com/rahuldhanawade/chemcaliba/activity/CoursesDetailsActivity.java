@@ -1,25 +1,19 @@
 package com.rahuldhanawade.chemcaliba.activity;
 
+import static com.rahuldhanawade.chemcaliba.RestClient.RestClient.CHAP_DOC_URL;
 import static com.rahuldhanawade.chemcaliba.RestClient.RestClient.ROOT_URL;
-import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToast;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastError;
-import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastSuccess;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
-import android.view.WindowManager;
 import android.webkit.URLUtil;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,7 +53,7 @@ public class CoursesDetailsActivity extends BaseActivity {
     private LoadingDialog loadingDialog;
 
     TextView tv_course_active_cd,tv_course_category_name_cd,tv_course_category_info_cd,tv_course_name_cd,tv_course_start_date_cd,
-            tv_course_end_date_cd,tv_duration_cd,tv_valid_date_cd;
+            tv_course_end_date_cd,tv_duration_cd,tv_valid_date_cd,tv_actual_price_cd,tv_offer_price_cd;
     LinearLayout linear_course_doclink_cd,linear_video_list,linear_course_list,linear_buy_view;
     ImageView iv_course_img;
     String course_id = "", is_bought = "";
@@ -70,7 +64,7 @@ public class CoursesDetailsActivity extends BaseActivity {
         ViewStub stub = (ViewStub) findViewById(R.id.base_layout);
         stub.setLayoutResource(R.layout.activity_courses_details);
         View inflated = stub.inflate();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         FetchToolTitle.fetchTitle((fetchToolbarTitle) CoursesDetailsActivity.this,"Course Details");
 
         loadingDialog = new LoadingDialog(CoursesDetailsActivity.this);
@@ -90,6 +84,8 @@ public class CoursesDetailsActivity extends BaseActivity {
         tv_course_end_date_cd = findViewById(R.id.tv_course_end_date_cd);
         tv_duration_cd = findViewById(R.id.tv_duration_cd);
         tv_valid_date_cd = findViewById(R.id.tv_valid_date_cd);
+        tv_actual_price_cd = findViewById(R.id.tv_actual_price_cd);
+        tv_offer_price_cd = findViewById(R.id.tv_offer_price_cd);
 
         iv_course_img = findViewById(R.id.iv_course_img);
 
@@ -145,6 +141,8 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 String course_end_date = CourseDetailsObj.getString("course_end_date");
                                 String course_duration = CourseDetailsObj.getString("course_duration_number_of_days");
                                 String course_img_url = CourseDetailsObj.getString("course_img_url");
+                                String course_actual_price = CourseDetailsObj.getString("course_actual_price");
+                                String course_sell_price = CourseDetailsObj.getString("course_sell_price");
 
                                 if(is_course_expired){
                                     tv_course_active_cd.setVisibility(View.VISIBLE);
@@ -158,6 +156,8 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 tv_course_end_date_cd.setText(course_end_date);
                                 tv_duration_cd.setText(course_duration);
                                 tv_valid_date_cd.setText(course_end_date);
+                                tv_actual_price_cd.setText("₹"+course_actual_price);
+                                tv_offer_price_cd.setText("₹"+course_sell_price);
 
                                 Glide.with(getApplicationContext())
                                         .applyDefaultRequestOptions(new RequestOptions()
@@ -298,6 +298,7 @@ public class CoursesDetailsActivity extends BaseActivity {
 
                 for(int i=0; i< courseChapterDetailsArray.length();i++){
                     JSONObject data_obj = courseChapterDetailsArray.getJSONObject(i);
+                    String chapter_master_id = data_obj.getString("chapter_master_id");
                     String chapter_name = data_obj.getString("chapter_name");
                     JSONArray ChapterDocArray = data_obj.getJSONArray("chapter_doc");
                     JSONArray SubChapterArray = data_obj.getJSONArray("sub_chapters");
@@ -329,6 +330,7 @@ public class CoursesDetailsActivity extends BaseActivity {
 
                     for(int j=0; j< ChapterDocArray.length();j++){
                         JSONObject Chapobj = ChapterDocArray.getJSONObject(j);
+                        String chapter_document_master_id = Chapobj.getString("chapter_document_master_id");
                         String document_title = Chapobj.getString("document_title");
                         String document_file = Chapobj.getString("document_file");
                         String doc_created_date = Chapobj.getString("doc_created_date");
@@ -336,9 +338,12 @@ public class CoursesDetailsActivity extends BaseActivity {
                         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View innerrowView = inflater.inflate(R.layout.layout_item_list, null);
 
+                        ImageView iv_img_layout = innerrowView.findViewById(R.id.iv_img_layout);
                         LinearLayout linear_item_lay = innerrowView.findViewById(R.id.linear_item_lay);
                         TextView tv_title_lay = innerrowView.findViewById(R.id.tv_title_lay);
                         TextView tv_created_date_lay = innerrowView.findViewById(R.id.tv_created_date_lay);
+
+                        iv_img_layout.setImageResource(R.drawable.ic_file);
 
                         tv_title_lay.setText(document_title);
                         tv_created_date_lay.setText(doc_created_date);
@@ -346,10 +351,11 @@ public class CoursesDetailsActivity extends BaseActivity {
                         linear_item_lay.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if(URLUtil.isValidUrl(document_file)){
+                                String doc_url = CHAP_DOC_URL+"chapter/"+chapter_master_id+"/chapter-documents/"+chapter_document_master_id+"/"+document_file;
+                                if(URLUtil.isValidUrl(doc_url)){
                                     Intent i = new Intent(CoursesDetailsActivity.this,PDFViewActivity.class);
                                     i.putExtra("pdf_file_name",document_title);
-                                    i.putExtra("pdf_file_url",document_file);
+                                    i.putExtra("pdf_file_url",doc_url);
                                     startActivity(i);
                                 }else{
                                     DisplayToastError(getApplicationContext(),"Sorry no url found please try later");
@@ -364,6 +370,7 @@ public class CoursesDetailsActivity extends BaseActivity {
                     if(SubChapterArray.length() > 0){
                         for(int h=0; h< SubChapterArray.length();h++){
                             JSONObject subdata_obj = SubChapterArray.getJSONObject(h);
+                            String sub_chapter_master_id = subdata_obj.getString("sub_chapter_master_id");
                             String sub_chapter_name = subdata_obj.getString("sub_chapter_name");
                             JSONArray SubChapterDocArray = subdata_obj.getJSONArray("sub_chapter_doc");
 
@@ -392,6 +399,7 @@ public class CoursesDetailsActivity extends BaseActivity {
 
                             for(int j=0; j< SubChapterDocArray.length();j++){
                                 JSONObject Chapobj = SubChapterDocArray.getJSONObject(j);
+                                String sub_chapter_document_master_id = Chapobj.getString("sub_chapter_document_master_id");
                                 String document_title = Chapobj.getString("document_title");
                                 String document_file = Chapobj.getString("document_file");
                                 String doc_created_date = Chapobj.getString("sub_doc_created_date");
@@ -399,9 +407,12 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 LayoutInflater subInnerinflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                                 View subinnerrowView = subInnerinflater.inflate(R.layout.layout_item_list, null);
 
+                                ImageView iv_img_layout = subinnerrowView.findViewById(R.id.iv_img_layout);
                                 LinearLayout linear_item_lay = subinnerrowView.findViewById(R.id.linear_item_lay);
                                 TextView tv_title_lay = subinnerrowView.findViewById(R.id.tv_title_lay);
                                 TextView tv_created_date_lay = subinnerrowView.findViewById(R.id.tv_created_date_lay);
+
+                                iv_img_layout.setImageResource(R.drawable.ic_file);
 
                                 tv_title_lay.setText(document_title);
                                 tv_created_date_lay.setText(doc_created_date);
@@ -409,10 +420,11 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 linear_item_lay.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        if(URLUtil.isValidUrl(document_file)){
+                                        String sub_doc_url = CHAP_DOC_URL+"sub-chapter/"+sub_chapter_master_id+"/sub-chapter-documents/"+sub_chapter_document_master_id+"/"+document_file;
+                                        if(URLUtil.isValidUrl(sub_doc_url)){
                                             Intent i = new Intent(CoursesDetailsActivity.this,PDFViewActivity.class);
                                             i.putExtra("pdf_file_name",document_title);
-                                            i.putExtra("pdf_file_url",document_file);
+                                            i.putExtra("pdf_file_url",sub_doc_url);
                                             startActivity(i);
                                         }else{
                                             DisplayToastError(getApplicationContext(),"Sorry no url found please try later");
