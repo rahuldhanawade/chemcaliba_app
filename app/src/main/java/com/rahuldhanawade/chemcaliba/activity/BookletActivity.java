@@ -4,10 +4,10 @@ import static com.rahuldhanawade.chemcaliba.RestClient.RestClient.CHAP_DOC_URL;
 import static com.rahuldhanawade.chemcaliba.RestClient.RestClient.ROOT_URL;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastError;
 
-import android.content.ActivityNotFoundException;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,82 +48,43 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CoursesDetailsActivity extends BaseActivity {
+public class BookletActivity extends BaseActivity {
 
-    private static final String TAG = CoursesDetailsActivity.class.getSimpleName();
     private LoadingDialog loadingDialog;
 
-    TextView tv_course_active_cd,tv_course_category_name_cd,tv_course_category_info_cd,tv_course_name_cd,tv_course_start_date_cd,
-            tv_course_end_date_cd,tv_duration_cd,tv_valid_date_cd,tv_actual_price_cd,tv_offer_price_cd;
-    LinearLayout linear_course_doclink_cd,linear_video_list,linear_course_list,linear_buy_view;
-    ImageView iv_course_img;
-    String course_id = "", is_bought = "";
+    TextView tv_course_name_BT;
+    LinearLayout linear_course_list_BT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ViewStub stub = (ViewStub) findViewById(R.id.base_layout);
-        stub.setLayoutResource(R.layout.activity_courses_details);
+        stub.setLayoutResource(R.layout.activity_booklet);
         View inflated = stub.inflate();
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        FetchToolTitle.fetchTitle((fetchToolbarTitle) CoursesDetailsActivity.this,"Course Details");
+        FetchToolTitle.fetchTitle((fetchToolbarTitle) BookletActivity.this,"Booklets/Assesments");
 
-        loadingDialog = new LoadingDialog(CoursesDetailsActivity.this);
-
-        course_id = getIntent().getStringExtra("course_id");
-        is_bought = getIntent().getStringExtra("is_bought");
-
+        loadingDialog = new LoadingDialog(BookletActivity.this);
+        
         Init();
     }
 
     private void Init() {
-        tv_course_active_cd = findViewById(R.id.tv_course_active_cd);
-        tv_course_category_name_cd = findViewById(R.id.tv_course_category_name_cd);
-        tv_course_category_info_cd = findViewById(R.id.tv_course_category_info_cd);
-        tv_course_name_cd = findViewById(R.id.tv_course_name_cd);
-        tv_course_start_date_cd = findViewById(R.id.tv_course_start_date_cd);
-        tv_course_end_date_cd = findViewById(R.id.tv_course_end_date_cd);
-        tv_duration_cd = findViewById(R.id.tv_duration_cd);
-        tv_valid_date_cd = findViewById(R.id.tv_valid_date_cd);
-        tv_actual_price_cd = findViewById(R.id.tv_actual_price_cd);
-        tv_offer_price_cd = findViewById(R.id.tv_offer_price_cd);
 
-        iv_course_img = findViewById(R.id.iv_course_img);
+        tv_course_name_BT = findViewById(R.id.tv_course_name_BT);
+        linear_course_list_BT = findViewById(R.id.linear_course_list_BT);
 
-        linear_course_doclink_cd = findViewById(R.id.linear_course_doclink_cd);
-        linear_video_list = findViewById(R.id.linear_video_list);
-        linear_course_list = findViewById(R.id.linear_course_list);
-        linear_buy_view = findViewById(R.id.linear_buy_view);
-
-        if(is_bought.equals("1")){
-            linear_course_doclink_cd.setVisibility(View.VISIBLE);
-            linear_buy_view.setVisibility(View.GONE);
-        }else if(is_bought.equals("0")){
-            linear_course_doclink_cd.setVisibility(View.GONE);
-            linear_buy_view.setVisibility(View.VISIBLE);
-        }
-
-        linear_buy_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CoursesDetailsActivity.this, SubscribeProductActivity.class);
-                i.putExtra("product_id",course_id);
-                startActivity(i);
-            }
-        });
-
-        GetCourseDetails();
+        GetBookLets();
     }
 
-    private void GetCourseDetails() {
-
+    private void GetBookLets() {
+        
         loadingDialog.startLoadingDialog();
 
-        String CourseDetails_URL = ROOT_URL+"view_course_details";
+        String Booklets_URL = ROOT_URL+"booklets";
 
-        Log.d("CourseDetails_URL",""+CourseDetails_URL);
+        Log.d("Booklets_URL",""+Booklets_URL);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, CourseDetails_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Booklets_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -133,52 +94,18 @@ public class CoursesDetailsActivity extends BaseActivity {
                             boolean status = responseObj.getBoolean("status");
                             String message = responseObj.getString("message");
                             if(status){
-                                JSONObject CourseDetailsObj = responseObj.getJSONObject("course_details");
-                                boolean is_course_expired = CourseDetailsObj.getBoolean("is_course_expired");
-                                String course_category_name = CourseDetailsObj.getString("course_category_name");
-                                String course_category_info = CourseDetailsObj.getString("course_category_info");
-                                String course_name = CourseDetailsObj.getString("course_name");
-                                String course_start_date = CourseDetailsObj.getString("course_start_date");
-                                String course_end_date = CourseDetailsObj.getString("course_end_date");
-                                String course_duration = CourseDetailsObj.getString("course_duration_number_of_days");
-                                String course_img_url = CourseDetailsObj.getString("course_img_url");
-                                String course_actual_price = CourseDetailsObj.getString("course_actual_price");
-                                String course_sell_price = CourseDetailsObj.getString("course_sell_price");
+                                JSONArray validEnrollmentListArray = responseObj.getJSONArray("validEnrollmentList");
+                                for(int i = 0; i < validEnrollmentListArray.length(); i++){
+                                    JSONObject dataObj = validEnrollmentListArray.getJSONObject(i);
+                                    String course_name = dataObj.getString("course_name");
+                                    JSONArray CourseChapterArray = dataObj.getJSONArray("course_chapter");
 
-                                if(is_course_expired && is_bought.equals("1")){
-                                    tv_course_active_cd.setVisibility(View.VISIBLE);
-                                    linear_buy_view.setVisibility(View.GONE);
-                                }else{
-                                    tv_course_active_cd.setVisibility(View.GONE);
-                                    linear_buy_view.setVisibility(View.GONE);
+                                    tv_course_name_BT.setText(course_name);
+
+                                    setCourseDocLinks(CourseChapterArray);
                                 }
-                                tv_course_category_name_cd.setText(course_category_name);
-                                tv_course_category_info_cd.setText(course_category_info);
-                                tv_course_name_cd.setText(course_name);
-                                tv_course_start_date_cd.setText(course_start_date);
-                                tv_course_end_date_cd.setText(course_end_date);
-                                tv_duration_cd.setText(course_duration);
-                                tv_valid_date_cd.setText(course_end_date);
-                                tv_actual_price_cd.setText("₹"+course_actual_price);
-                                tv_offer_price_cd.setText("₹"+course_sell_price);
-
-                                Glide.with(getApplicationContext())
-                                        .applyDefaultRequestOptions(new RequestOptions()
-                                                .placeholder(R.drawable.logo_chemcaliba)
-                                                .error(R.drawable.logo_chemcaliba))
-                                        .load(course_img_url)
-                                        .into(iv_course_img);
-
-                                JSONArray CourseVideoDetailsArray = responseObj.getJSONArray("course_video_details");
-                                setVideoLinks(CourseVideoDetailsArray);
-
-                                JSONArray CourseChapterDetailsArray = responseObj.getJSONArray("course_chapter_details");
-                                setCourseDocLinks(CourseChapterDetailsArray);
-
                             }else{
-                                DisplayToastError(CoursesDetailsActivity.this,message);
-                                linear_course_doclink_cd.setVisibility(View.GONE);
-                                linear_buy_view.setVisibility(View.GONE);
+                                DisplayToastError(BookletActivity.this,message);
                             }
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -190,19 +117,17 @@ public class CoursesDetailsActivity extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         loadingDialog.dismissDialog();
-                        linear_course_doclink_cd.setVisibility(View.GONE);
-                        linear_buy_view.setVisibility(View.GONE);
 
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            DisplayToastError(CoursesDetailsActivity.this,"Server is not connected to internet.");
+                            DisplayToastError(BookletActivity.this,"Server is not connected to internet.");
                         } else if (error instanceof AuthFailureError) {
-                            DisplayToastError(CoursesDetailsActivity.this,"Server couldn't find the authenticated request.");
+                            DisplayToastError(BookletActivity.this,"Server couldn't find the authenticated request.");
                         } else if (error instanceof ServerError) {
-                            DisplayToastError(CoursesDetailsActivity.this,"Server is not responding.Please try Again Later");
+                            DisplayToastError(BookletActivity.this,"Server is not responding.Please try Again Later");
                         } else if (error instanceof NetworkError) {
-                            DisplayToastError(CoursesDetailsActivity.this,"Your device is not connected to internet.");
+                            DisplayToastError(BookletActivity.this,"Your device is not connected to internet.");
                         } else if (error instanceof ParseError) {
-                            DisplayToastError(CoursesDetailsActivity.this,"Parse Error (because of invalid json or xml).");
+                            DisplayToastError(BookletActivity.this,"Parse Error (because of invalid json or xml).");
                         }
                     }
                 }) {
@@ -211,8 +136,7 @@ public class CoursesDetailsActivity extends BaseActivity {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("student_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"student_id"));
                 map.put("emailid", UtilitySharedPreferences.getPrefs(getApplicationContext(),"emailid"));
-                map.put("course_id", course_id);
-                Log.d("CourseDetailsParamas",""+map.toString());
+                Log.d("Booklets_URLParamas",""+map.toString());
                 return map;
             }
         };
@@ -224,83 +148,12 @@ public class CoursesDetailsActivity extends BaseActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void setVideoLinks(JSONArray courseVideoDetailsArray) {
-
-        if(courseVideoDetailsArray.length() > 0){
-            try {
-                LayoutInflater maininflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View rowView = maininflater.inflate(R.layout.layout_item_title, null);
-                ImageView iv_exp_arrow = rowView.findViewById(R.id.iv_exp_arrow);
-                TextView tv_Exp_title = rowView.findViewById(R.id.tv_Exp_title);
-                LinearLayout linear_exp_header = rowView.findViewById(R.id.linear_exp_header);
-                LinearLayout linear_exp_video_links = rowView.findViewById(R.id.linear_exp_video_links);
-
-                linear_exp_header.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(linear_exp_video_links.getVisibility() == View.VISIBLE){
-                            iv_exp_arrow.setImageResource(R.drawable.ic_down_circle);
-                            linear_exp_video_links.setVisibility(View.GONE);
-                        }else{
-                            iv_exp_arrow.setImageResource(R.drawable.ic_circle_up);
-                            linear_exp_video_links.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
-                tv_Exp_title.setText("Video Lecture Links");
-
-                for(int i=0; i< courseVideoDetailsArray.length();i++){
-                    JSONObject data_obj = courseVideoDetailsArray.getJSONObject(i);
-                    String video_title = data_obj.getString("video_title");
-                    String video_link = data_obj.getString("video_link");
-                    String created_date = data_obj.getString("created_date");
-
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View innerrowView = inflater.inflate(R.layout.layout_item_list, null);
-
-                    LinearLayout linear_item_lay = innerrowView.findViewById(R.id.linear_item_lay);
-                    TextView tv_title_lay = innerrowView.findViewById(R.id.tv_title_lay);
-                    TextView tv_created_date_lay = innerrowView.findViewById(R.id.tv_created_date_lay);
-
-                    tv_title_lay.setText(video_title);
-                    tv_created_date_lay.setText(created_date);
-
-                    linear_item_lay.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if(URLUtil.isValidUrl(video_link)){
-                                Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(video_link));
-                                Intent webIntent = new Intent(Intent.ACTION_VIEW,
-                                        Uri.parse(video_link));
-                                try {
-                                    startActivity(appIntent);
-                                } catch (ActivityNotFoundException ex) {
-                                    startActivity(webIntent);
-                                }
-                            }else{
-                                DisplayToastError(getApplicationContext(),"Sorry no url found please try later");
-                            }
-                        }
-                    });
-
-                    linear_exp_video_links.addView(innerrowView);
-
-                }
-
-                linear_video_list.addView(rowView);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    private void setCourseDocLinks(JSONArray courseChapterDetailsArray) {
-        if(courseChapterDetailsArray.length() > 0){
+    private void setCourseDocLinks(JSONArray courseChapterArray) {
+        if(courseChapterArray.length() > 0){
             try {
 
-                for(int i=0; i< courseChapterDetailsArray.length();i++){
-                    JSONObject data_obj = courseChapterDetailsArray.getJSONObject(i);
+                for(int i=0; i< courseChapterArray.length();i++){
+                    JSONObject data_obj = courseChapterArray.getJSONObject(i);
                     String chapter_master_id = data_obj.getString("chapter_master_id");
                     String chapter_name = data_obj.getString("chapter_name");
                     JSONArray ChapterDocArray = data_obj.getJSONArray("chapter_doc");
@@ -355,9 +208,8 @@ public class CoursesDetailsActivity extends BaseActivity {
                             @Override
                             public void onClick(View view) {
                                 String doc_url = CHAP_DOC_URL+"chapter/"+chapter_master_id+"/chapter-documents/"+chapter_document_master_id+"/"+document_file;
-                                Log.d(TAG, "onClick: "+doc_url);
                                 if(URLUtil.isValidUrl(doc_url)){
-                                    Intent i = new Intent(CoursesDetailsActivity.this,PDFViewActivity.class);
+                                    Intent i = new Intent(BookletActivity.this,PDFViewActivity.class);
                                     i.putExtra("pdf_file_name",document_title);
                                     i.putExtra("pdf_file_url",doc_url);
                                     startActivity(i);
@@ -425,9 +277,8 @@ public class CoursesDetailsActivity extends BaseActivity {
                                     @Override
                                     public void onClick(View view) {
                                         String sub_doc_url = CHAP_DOC_URL+"sub-chapter/"+sub_chapter_master_id+"/sub-chapter-documents/"+sub_chapter_document_master_id+"/"+document_file;
-                                        Log.d(TAG, "onClick: "+sub_doc_url);
                                         if(URLUtil.isValidUrl(sub_doc_url)){
-                                            Intent i = new Intent(CoursesDetailsActivity.this,PDFViewActivity.class);
+                                            Intent i = new Intent(BookletActivity.this,PDFViewActivity.class);
                                             i.putExtra("pdf_file_name",document_title);
                                             i.putExtra("pdf_file_url",sub_doc_url);
                                             startActivity(i);
@@ -445,7 +296,7 @@ public class CoursesDetailsActivity extends BaseActivity {
                         }
                     }
 
-                    linear_course_list.addView(rowView);
+                    linear_course_list_BT.addView(rowView);
 
                 }
             } catch (JSONException e) {

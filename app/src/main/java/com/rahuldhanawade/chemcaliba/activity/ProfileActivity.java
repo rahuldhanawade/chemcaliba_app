@@ -114,6 +114,7 @@ public class ProfileActivity extends BaseActivity {
                 setEnableEditText(false);
                 linear_active_update.setVisibility(View.VISIBLE);
                 linear_update_details.setVisibility(View.GONE);
+                GetProfileData();
             }
         });
         linear_change_password_PD.setOnClickListener(new View.OnClickListener() {

@@ -188,6 +188,7 @@
                         android:layout_weight="1"
                         android:layout_margin="10dp"
                         android:elevation="3dp"
+                        android:id="@+id/linear_booklets"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:padding="10dp"

@@ -6,42 +6,52 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
             android:title="@string/app_nav_1" />
 
         <item
             android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_user"
             android:title="@string/app_nav_10" />
 
         <item
             android:id="@+id/nav_our_courses"
+            android:icon="@drawable/ic_courses"
             android:title="@string/app_nav_2" />
 
         <item
             android:id="@+id/nav_enrolled_courses"
+            android:icon="@drawable/ic_file_sign"
             android:title="@string/app_nav_3" />
 
         <item
               android:id="@+id/nav_test_results"
+            android:icon="@drawable/ic_test"
               android:title="@string/app_nav_4" />
 
         <item
              android:id="@+id/nav_test_schedule"
+            android:icon="@drawable/ic_calendar_clock"
              android:title="@string/app_nav_5" />
 
         <item
              android:id="@+id/nav_announccments"
+            android:icon="@drawable/ic_megaphone"
              android:title="@string/app_nav_6" />
 
         <item
              android:id="@+id/nav_pt_meeting"
+            android:icon="@drawable/ic_conversation"
              android:title="@string/app_nav_7" />
 
         <item
             android:id="@+id/nav_holidays"
+            android:icon="@drawable/ic_umbrella_beach"
             android:title="@string/app_nav_8" />
 
         <item
             android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
             android:title="@string/app_nav_9" />
 
     </group>

@@ -12,7 +12,7 @@ import com.rahuldhanawade.chemcaliba.activity.baseActivity.FetchToolTitle;
 
 public class MainActivity extends BaseActivity {
 
-    LinearLayout linear_live_lect,linear_enrolled_courses,linear_test_results,linear_test_schedule;
+    LinearLayout linear_live_lect,linear_enrolled_courses,linear_test_results,linear_test_schedule,linear_booklets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,15 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, TestScheduleActivity.class);
+                startActivity(i);
+            }
+        });
+
+        linear_booklets = findViewById(R.id.linear_booklets);
+        linear_booklets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, BookletActivity.class);
                 startActivity(i);
             }
         });
