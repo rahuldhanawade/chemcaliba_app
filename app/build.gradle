@@ -59,4 +59,7 @@ dependencies {
 
     //CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Razerpay
+    implementation 'com.razorpay:checkout:1.6.18'
 }

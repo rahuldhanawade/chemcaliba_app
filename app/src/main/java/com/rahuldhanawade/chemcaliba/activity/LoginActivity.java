@@ -134,11 +134,13 @@ public class LoginActivity extends AppCompatActivity {
                                 String student_id = responseObj.getString("student_id");
                                 String full_name = responseObj.getString("full_name");
                                 String emailid = responseObj.getString("emailid");
+                                String contact = responseObj.getString("contact");
 
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "status", String.valueOf(status));
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "student_id", student_id);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "full_name", full_name);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "emailid", emailid);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "contact", contact);
 
                                 DisplayToastSuccess(LoginActivity.this,message);
 

@@ -145,12 +145,14 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 String course_actual_price = CourseDetailsObj.getString("course_actual_price");
                                 String course_sell_price = CourseDetailsObj.getString("course_sell_price");
 
-                                if(is_course_expired && is_bought.equals("1")){
-                                    tv_course_active_cd.setVisibility(View.VISIBLE);
+                                if(is_course_expired || is_bought.equals("1")){
+                                    if(is_course_expired){
+                                        tv_course_active_cd.setVisibility(View.VISIBLE);
+                                    }
                                     linear_buy_view.setVisibility(View.GONE);
                                 }else{
                                     tv_course_active_cd.setVisibility(View.GONE);
-                                    linear_buy_view.setVisibility(View.GONE);
+                                    linear_buy_view.setVisibility(View.VISIBLE);
                                 }
                                 tv_course_category_name_cd.setText(course_category_name);
                                 tv_course_category_info_cd.setText(course_category_info);

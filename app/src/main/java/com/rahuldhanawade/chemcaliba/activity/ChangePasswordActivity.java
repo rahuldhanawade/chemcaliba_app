@@ -110,8 +110,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
                             String message = responseObj.getString("message");
                             if(status){
                                 DisplayToastSuccess(ChangePasswordActivity.this,message);
-
                                 Intent i = new Intent(ChangePasswordActivity.this, LoginActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(i);
                             }else{
                                 DisplayToastError(ChangePasswordActivity.this,message);
