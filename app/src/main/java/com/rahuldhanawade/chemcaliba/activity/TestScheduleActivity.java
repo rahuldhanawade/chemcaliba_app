@@ -4,7 +4,6 @@ import static com.rahuldhanawade.chemcaliba.RestClient.RestClient.ROOT_URL;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastError;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastInfo;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
@@ -33,10 +35,9 @@ import com.android.volley.toolbox.Volley;
 import com.rahuldhanawade.chemcaliba.R;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.BaseActivity;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.FetchToolTitle;
-import com.rahuldhanawade.chemcaliba.adapter.TestResultAdapter;
-import com.rahuldhanawade.chemcaliba.adapter.TestResultPOJO;
 import com.rahuldhanawade.chemcaliba.adapter.TestScheduleAdapter;
 import com.rahuldhanawade.chemcaliba.adapter.TestSchedulePOJO;
+import com.rahuldhanawade.chemcaliba.utills.MyValidator;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
 import org.json.JSONArray;
@@ -56,6 +57,10 @@ public class TestScheduleActivity extends BaseActivity {
     TestScheduleAdapter adapter;
     int page = 1, limit = 10;
 
+    EditText edt_search_test_schedule;
+    LinearLayout linear_search_test_schedule;
+    String str_search = "";
+    ImageView clear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,12 +77,44 @@ public class TestScheduleActivity extends BaseActivity {
         nestedScrollView=findViewById(R.id.nested_view_test_schedule);
         recyclerView=findViewById(R.id.recy_test_schedule);
         progressBar=findViewById(R.id.progress_bar_test_schedule);
+        edt_search_test_schedule=findViewById(R.id.edt_search_test_schedule);
+        linear_search_test_schedule=findViewById(R.id.linear_search_test_schedule);
 
+        linear_search_test_schedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!MyValidator.isValidField(edt_search_test_schedule)){
+                    DisplayToastError(getApplicationContext(),"Enter Something");
+                }else{
+                    str_search = edt_search_test_schedule.getText().toString();
+                    page = 1;
+                    testSchedulePOJOS.clear();
+                    adapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.VISIBLE);
+                    GetTestScheduleList(page,limit,str_search);
+                }
+            }
+        });
+
+        clear = findViewById(R.id.iv_clear_test_schedule);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_search_test_schedule.setText("");
+                str_search="";
+                page = 1;
+                testSchedulePOJOS.clear();
+                adapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.VISIBLE);
+                GetTestScheduleList(page,limit,str_search);
+            }
+        });
+        
         adapter = new TestScheduleAdapter(TestScheduleActivity.this,testSchedulePOJOS);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        GetTestScheduleList(page,limit);
+        GetTestScheduleList(page,limit, str_search);
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -85,14 +122,14 @@ public class TestScheduleActivity extends BaseActivity {
                 if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
                     page++;
                     progressBar.setVisibility(View.VISIBLE);
-                    GetTestScheduleList(page,limit);
+                    GetTestScheduleList(page,limit, str_search);
                 }
             }
         });
         
     }
 
-    private void GetTestScheduleList(int page, int limit) {
+    private void GetTestScheduleList(int page, int limit, String str_search) {
         String TestSchedule_URL = ROOT_URL+"test_schedules";
 
         Log.d("TestSchedule_URL",""+TestSchedule_URL);
@@ -130,6 +167,7 @@ public class TestScheduleActivity extends BaseActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     DisplayToastError(TestScheduleActivity.this,"Server is not connected to internet.");
                 } else if (error instanceof AuthFailureError) {
@@ -150,7 +188,7 @@ public class TestScheduleActivity extends BaseActivity {
                 map.put("emailid", UtilitySharedPreferences.getPrefs(getApplicationContext(),"emailid"));
                 map.put("limit", String.valueOf(limit));
                 map.put("page_num", String.valueOf(page));
-                map.put("searchTerm", "");
+                map.put("searchTerm", str_search);
                 Log.d("TestSchedule_URLData",""+map.toString());
                 return map;
             }

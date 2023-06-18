@@ -4,7 +4,6 @@ import static com.rahuldhanawade.chemcaliba.RestClient.RestClient.ROOT_URL;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastError;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastInfo;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
@@ -33,13 +35,9 @@ import com.android.volley.toolbox.Volley;
 import com.rahuldhanawade.chemcaliba.R;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.BaseActivity;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.FetchToolTitle;
-import com.rahuldhanawade.chemcaliba.adapter.EnrolledAdapter;
-import com.rahuldhanawade.chemcaliba.adapter.EnrolledPOJO;
 import com.rahuldhanawade.chemcaliba.adapter.HolidayAdapter;
 import com.rahuldhanawade.chemcaliba.adapter.HolidayPOJO;
-import com.rahuldhanawade.chemcaliba.adapter.PTMeetingAdapter;
-import com.rahuldhanawade.chemcaliba.adapter.PTMeetingPOJO;
-import com.rahuldhanawade.chemcaliba.adapter.TestResultAdapter;
+import com.rahuldhanawade.chemcaliba.utills.MyValidator;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
 import org.json.JSONArray;
@@ -59,6 +57,11 @@ public class HolidayActivity extends BaseActivity {
     HolidayAdapter adapter;
     int page = 1, limit = 10;
 
+    EditText edt_search_HD;
+    LinearLayout linear_search_HD;
+    String str_search = "";
+    ImageView clear;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,11 +79,44 @@ public class HolidayActivity extends BaseActivity {
         recyclerView=findViewById(R.id.recy_HD);
         progressBar=findViewById(R.id.progress_bar_HD);
 
+        edt_search_HD=findViewById(R.id.edt_search_HD);
+        linear_search_HD=findViewById(R.id.linear_search_HD);
+
+        linear_search_HD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!MyValidator.isValidField(edt_search_HD)){
+                    DisplayToastError(getApplicationContext(),"Enter Something");
+                }else{
+                    str_search = edt_search_HD.getText().toString();
+                    page = 1;
+                    holidayPOJOS.clear();
+                    adapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.VISIBLE);
+                    GetHolidayList(page,limit,str_search);
+                }
+            }
+        });
+
+        clear = findViewById(R.id.iv_clear_HD);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_search_HD.setText("");
+                str_search="";
+                page = 1;
+                holidayPOJOS.clear();
+                adapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.VISIBLE);
+                GetHolidayList(page,limit,str_search);
+            }
+        });
+
         adapter = new HolidayAdapter(HolidayActivity.this,holidayPOJOS);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        GetHolidayList(page,limit);
+        GetHolidayList(page,limit, str_search);
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -88,13 +124,13 @@ public class HolidayActivity extends BaseActivity {
                 if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
                     page++;
                     progressBar.setVisibility(View.VISIBLE);
-                    GetHolidayList(page,limit);
+                    GetHolidayList(page,limit, str_search);
                 }
             }
         });
     }
 
-    private void GetHolidayList(int page, int limit) {
+    private void GetHolidayList(int page, int limit, String str_search) {
 
         String Holiday_URL = ROOT_URL+"holiday_info";
 
@@ -133,6 +169,7 @@ public class HolidayActivity extends BaseActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     DisplayToastError(HolidayActivity.this,"Server is not connected to internet.");
                 } else if (error instanceof AuthFailureError) {
@@ -153,7 +190,7 @@ public class HolidayActivity extends BaseActivity {
                 map.put("emailid", UtilitySharedPreferences.getPrefs(getApplicationContext(),"emailid"));
                 map.put("limit", String.valueOf(limit));
                 map.put("page_num", String.valueOf(page));
-                map.put("searchTerm", "");
+                map.put("searchTerm", str_search);
                 Log.d("Holiday_URLData",""+map.toString());
                 return map;
             }

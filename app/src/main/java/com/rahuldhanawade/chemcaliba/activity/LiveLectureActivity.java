@@ -13,6 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
@@ -35,6 +38,7 @@ import com.rahuldhanawade.chemcaliba.activity.baseActivity.FetchToolTitle;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.fetchToolbarTitle;
 import com.rahuldhanawade.chemcaliba.adapter.LiveLectureAdapter;
 import com.rahuldhanawade.chemcaliba.adapter.LiveLecturePOJO;
+import com.rahuldhanawade.chemcaliba.utills.MyValidator;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
 import org.json.JSONArray;
@@ -53,6 +57,11 @@ public class LiveLectureActivity extends BaseActivity{
     ArrayList<LiveLecturePOJO> liveLecturePOJOS = new ArrayList<>();
     LiveLectureAdapter adapter;
     int page = 1, limit = 10;
+
+    EditText edt_search_live_lectures;
+    LinearLayout linear_search_live_lectures;
+    String str_search = "";
+    ImageView clear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,12 +79,44 @@ public class LiveLectureActivity extends BaseActivity{
         nestedScrollView=findViewById(R.id.nested_view_live_lectures);
         recyclerView=findViewById(R.id.recy_live_lectures);
         progressBar=findViewById(R.id.progress_bar_live_lectures);
+        edt_search_live_lectures=findViewById(R.id.edt_search_live_lectures);
+        linear_search_live_lectures=findViewById(R.id.linear_search_live_lectures);
+
+        linear_search_live_lectures.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!MyValidator.isValidField(edt_search_live_lectures)){
+                    DisplayToastError(getApplicationContext(),"Enter Something");
+                }else{
+                    str_search = edt_search_live_lectures.getText().toString();
+                    page = 1;
+                    liveLecturePOJOS.clear();
+                    adapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.VISIBLE);
+                    GetLiveLecturesList(page,limit,str_search);
+                }
+            }
+        });
+
+        clear = findViewById(R.id.iv_clear_live_lectures);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_search_live_lectures.setText("");
+                str_search="";
+                page = 1;
+                liveLecturePOJOS.clear();
+                adapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.VISIBLE);
+                GetLiveLecturesList(page,limit,str_search);
+            }
+        });
 
         adapter = new LiveLectureAdapter(LiveLectureActivity.this,liveLecturePOJOS);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        GetLiveLecturesList(page,limit);
+        GetLiveLecturesList(page,limit, str_search);
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -83,14 +124,14 @@ public class LiveLectureActivity extends BaseActivity{
                 if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
                     page++;
                     progressBar.setVisibility(View.VISIBLE);
-                    GetLiveLecturesList(page,limit);
+                    GetLiveLecturesList(page,limit, str_search);
                 }
             }
         });
         
     }
 
-    private void GetLiveLecturesList(int page, int limit) {
+    private void GetLiveLecturesList(int page, int limit, String str_search) {
 
         String LiveLecture_URL = ROOT_URL+"lecture_links";
 
@@ -130,6 +171,7 @@ public class LiveLectureActivity extends BaseActivity{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     DisplayToastError(LiveLectureActivity.this,"Server is not connected to internet.");
                 } else if (error instanceof AuthFailureError) {
@@ -150,7 +192,7 @@ public class LiveLectureActivity extends BaseActivity{
                 map.put("emailid", UtilitySharedPreferences.getPrefs(getApplicationContext(),"emailid"));
                 map.put("limit", String.valueOf(limit));
                 map.put("page_num", String.valueOf(page));
-                map.put("searchTerm", "");
+                map.put("searchTerm", str_search);
                 Log.d("enrolledData",""+map.toString());
                 return map;
             }

@@ -135,6 +135,7 @@ public class OurCoursesActivity extends BaseActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     DisplayToastError(OurCoursesActivity.this,"Server is not connected to internet.");
                 } else if (error instanceof AuthFailureError) {

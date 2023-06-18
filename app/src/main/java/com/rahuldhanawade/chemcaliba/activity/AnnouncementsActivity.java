@@ -13,6 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
@@ -34,6 +37,7 @@ import com.rahuldhanawade.chemcaliba.activity.baseActivity.BaseActivity;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.FetchToolTitle;
 import com.rahuldhanawade.chemcaliba.adapter.AnnouncementsPOJO;
 import com.rahuldhanawade.chemcaliba.adapter.AnnouncementsAdapter;
+import com.rahuldhanawade.chemcaliba.utills.MyValidator;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
 import org.json.JSONArray;
@@ -52,6 +56,11 @@ public class AnnouncementsActivity extends BaseActivity {
     ArrayList<AnnouncementsPOJO> announcementsPOJOS = new ArrayList<>();
     AnnouncementsAdapter adapter;
     int page = 1, limit = 10;
+    
+    EditText edt_search_announcements;
+    LinearLayout linear_search_announcements;
+    String str_search = "";
+    ImageView clear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +78,44 @@ public class AnnouncementsActivity extends BaseActivity {
         nestedScrollView=findViewById(R.id.nested_view_announcements);
         recyclerView=findViewById(R.id.recy_announcements);
         progressBar=findViewById(R.id.progress_bar_announcements);
+        edt_search_announcements=findViewById(R.id.edt_search_announcements);
+        linear_search_announcements=findViewById(R.id.linear_search_announcements);
+
+        linear_search_announcements.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!MyValidator.isValidField(edt_search_announcements)){
+                    DisplayToastError(getApplicationContext(),"Enter Something");
+                }else{
+                    str_search = edt_search_announcements.getText().toString();
+                    page = 1;
+                    announcementsPOJOS.clear();
+                    adapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.VISIBLE);
+                    GetAnnouncements(page,limit,str_search);
+                }
+            }
+        });
+
+        clear = findViewById(R.id.iv_clear_announcements);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_search_announcements.setText("");
+                str_search="";
+                page = 1;
+                announcementsPOJOS.clear();
+                adapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.VISIBLE);
+                GetAnnouncements(page,limit,str_search);
+            }
+        });
 
         adapter = new AnnouncementsAdapter(AnnouncementsActivity.this,announcementsPOJOS);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        GetAnnouncements(page,limit);
+        GetAnnouncements(page,limit, str_search);
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -82,13 +123,13 @@ public class AnnouncementsActivity extends BaseActivity {
                 if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
                     page++;
                     progressBar.setVisibility(View.VISIBLE);
-                    GetAnnouncements(page,limit);
+                    GetAnnouncements(page,limit, str_search);
                 }
             }
         });
     }
 
-    private void GetAnnouncements(int page, int limit) {
+    private void GetAnnouncements(int page, int limit, String str_search) {
 
         String Announcements_URL = ROOT_URL+"announcements";
 
@@ -126,6 +167,7 @@ public class AnnouncementsActivity extends BaseActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     DisplayToastError(AnnouncementsActivity.this,"Server is not connected to internet.");
                 } else if (error instanceof AuthFailureError) {
@@ -146,7 +188,7 @@ public class AnnouncementsActivity extends BaseActivity {
                 map.put("emailid", UtilitySharedPreferences.getPrefs(getApplicationContext(),"emailid"));
                 map.put("limit", String.valueOf(limit));
                 map.put("page_num", String.valueOf(page));
-                map.put("searchTerm", "");
+                map.put("searchTerm", str_search);
                 Log.d("Announcements_URLData",""+map.toString());
                 return map;
             }

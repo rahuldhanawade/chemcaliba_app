@@ -4,7 +4,6 @@ import static com.rahuldhanawade.chemcaliba.RestClient.RestClient.ROOT_URL;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastError;
 import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastInfo;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
@@ -35,8 +37,7 @@ import com.rahuldhanawade.chemcaliba.activity.baseActivity.BaseActivity;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.FetchToolTitle;
 import com.rahuldhanawade.chemcaliba.adapter.PTMeetingAdapter;
 import com.rahuldhanawade.chemcaliba.adapter.PTMeetingPOJO;
-import com.rahuldhanawade.chemcaliba.adapter.TestScheduleAdapter;
-import com.rahuldhanawade.chemcaliba.adapter.TestSchedulePOJO;
+import com.rahuldhanawade.chemcaliba.utills.MyValidator;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
 import org.json.JSONArray;
@@ -56,6 +57,11 @@ public class PTActivity extends BaseActivity {
     PTMeetingAdapter adapter;
     int page = 1, limit = 10;
 
+    EditText edt_search_PT;
+    LinearLayout linear_search_PT;
+    String str_search = "";
+    ImageView clear;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,11 +79,44 @@ public class PTActivity extends BaseActivity {
         recyclerView=findViewById(R.id.recy_PT);
         progressBar=findViewById(R.id.progress_bar_PT);
 
+        edt_search_PT=findViewById(R.id.edt_search_PT);
+        linear_search_PT=findViewById(R.id.linear_search_PT);
+
+        linear_search_PT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!MyValidator.isValidField(edt_search_PT)){
+                    DisplayToastError(getApplicationContext(),"Enter Something");
+                }else{
+                    str_search = edt_search_PT.getText().toString();
+                    page = 1;
+                    ptMeetingPOJOS.clear();
+                    adapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.VISIBLE);
+                    GetPTMeetingList(page,limit,str_search);
+                }
+            }
+        });
+
+        clear = findViewById(R.id.iv_clear_PT);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_search_PT.setText("");
+                str_search="";
+                page = 1;
+                ptMeetingPOJOS.clear();
+                adapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.VISIBLE);
+                GetPTMeetingList(page,limit,str_search);
+            }
+        });
+
         adapter = new PTMeetingAdapter(PTActivity.this,ptMeetingPOJOS);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        GetPTMeetingList(page,limit);
+        GetPTMeetingList(page,limit, str_search);
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -85,13 +124,13 @@ public class PTActivity extends BaseActivity {
                 if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
                     page++;
                     progressBar.setVisibility(View.VISIBLE);
-                    GetPTMeetingList(page,limit);
+                    GetPTMeetingList(page,limit, str_search);
                 }
             }
         });
     }
 
-    private void GetPTMeetingList(int page, int limit) {
+    private void GetPTMeetingList(int page, int limit, String str_search) {
 
         String PTMeeting_URL = ROOT_URL+"parent_teachers_meetings";
 
@@ -130,6 +169,7 @@ public class PTActivity extends BaseActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     DisplayToastError(PTActivity.this,"Server is not connected to internet.");
                 } else if (error instanceof AuthFailureError) {
@@ -150,7 +190,7 @@ public class PTActivity extends BaseActivity {
                 map.put("emailid", UtilitySharedPreferences.getPrefs(getApplicationContext(),"emailid"));
                 map.put("limit", String.valueOf(limit));
                 map.put("page_num", String.valueOf(page));
-                map.put("searchTerm", "");
+                map.put("searchTerm", str_search);
                 Log.d("PTMeeting_URLData",""+map.toString());
                 return map;
             }
