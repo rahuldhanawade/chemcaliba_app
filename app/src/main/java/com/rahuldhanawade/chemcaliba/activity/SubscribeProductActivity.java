@@ -279,7 +279,7 @@ public class SubscribeProductActivity extends AppCompatActivity implements Payme
                                 tv_unit_price_SP.setText(price_after_discount);
                                 tv_course_start_date_SP.setText(course_start_date);
                                 tv_course_end_date_SP.setText(Str_course_end_date);
-                                tv_duration_SP.setText(course_duration_number_of_days);
+                                tv_duration_SP.setText(course_duration_number_of_days + " Days");
                                 tv_valid_date_SP.setText(Str_course_end_date);
                                 tv_total_SP.setText("₹"+price_after_discount);
                                 Str_amount = price_after_discount;

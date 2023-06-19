@@ -159,7 +159,7 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 tv_course_name_cd.setText(course_name);
                                 tv_course_start_date_cd.setText(course_start_date);
                                 tv_course_end_date_cd.setText(course_end_date);
-                                tv_duration_cd.setText(course_duration);
+                                tv_duration_cd.setText(course_duration + " Days");
                                 tv_valid_date_cd.setText(course_end_date);
                                 tv_actual_price_cd.setText("₹"+course_actual_price);
                                 tv_offer_price_cd.setText("₹"+course_sell_price);

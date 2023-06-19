@@ -52,7 +52,7 @@ public class OurCourcesAdapter extends RecyclerView.Adapter<OurCourcesAdapter.Vi
         holder.tv_category_oc.setText(ourCourcesPOJOS1.getCourseCategoryName());
         holder.tv_course_category_info_oc.setText(ourCourcesPOJOS1.getCourseName());
         holder.tv_date_oc.setText(ourCourcesPOJOS1.getCourseStartDate()+" To "+ourCourcesPOJOS1.getCourseStartDate());
-        holder.tv_duration_oc.setText("("+ourCourcesPOJOS1.getCourseDurationNumberOfDays() + "Days)");
+        holder.tv_duration_oc.setText("("+ourCourcesPOJOS1.getCourseDurationNumberOfDays() + " Days)");
         holder.tv_actual_price_oc.setText("₹"+ourCourcesPOJOS1.getCourseActualPrice());
         holder.tv_actual_price_oc.setPaintFlags(holder.tv_actual_price_oc.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tv_sell_price_oc.setText("₹"+ourCourcesPOJOS1.getCourseSellPrice());

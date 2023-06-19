@@ -66,26 +66,25 @@
                             android:layout_weight="1"
                             android:id="@+id/linear_live_lect"
                             android:layout_margin="10dp"
-                            android:elevation="3dp"
+                            android:elevation="10dp"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="10dp"
-                            android:background="@drawable/button_drawable"
+                            android:background="@drawable/dashboard_nav_white"
                             android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:src="@drawable/video"
+                                android:padding="10dp"
+                                android:layout_height="80dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 style="@style/TitleTextStyle"
                                 android:text="Lecture Links"
-                                android:textColor="@color/white"
+                                android:textColor="@color/black"
                                 android:layout_height="wrap_content"/>
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:src="@drawable/video_file_icon"
-                                android:padding="10dp"
-                                android:layout_height="80dp"
-                                app:tint="@color/white" />
 
                         </LinearLayout>
 
@@ -94,26 +93,25 @@
                             android:layout_weight="1"
                             android:id="@+id/linear_test_results"
                             android:layout_margin="10dp"
-                            android:elevation="3dp"
+                            android:elevation="10dp"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="10dp"
-                            android:background="@drawable/dashboard_nav_yesllow"
+                            android:background="@drawable/dashboard_nav_white"
                             android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:src="@drawable/analysis"
+                                android:padding="10dp"
+                                android:layout_height="80dp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 style="@style/TitleTextStyle"
                                 android:text="Test Result"
-                                android:textColor="@color/white"
+                                android:textColor="@color/black"
                                 android:layout_height="wrap_content"/>
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:src="@drawable/bar_chart_icon"
-                                android:padding="10dp"
-                                app:tint="@color/white"
-                                android:layout_height="80dp"/>
 
                         </LinearLayout>
 
@@ -130,26 +128,25 @@
                             android:layout_weight="1"
                             android:id="@+id/linear_enrolled_courses"
                             android:layout_margin="10dp"
-                            android:elevation="3dp"
+                            android:elevation="10dp"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="10dp"
-                            android:background="@drawable/dashboard_nav_blue"
+                            android:background="@drawable/dashboard_nav_white"
                             android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:src="@drawable/endorsement"
+                                android:padding="10dp"
+                                android:layout_height="80dp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 style="@style/TitleTextStyle"
                                 android:text="Enrolled Courses"
-                                android:textColor="@color/white"
+                                android:textColor="@color/black"
                                 android:layout_height="wrap_content"/>
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:src="@drawable/crosshairs_icon"
-                                android:padding="10dp"
-                                app:tint="@color/white"
-                                android:layout_height="80dp"/>
 
                         </LinearLayout>
 
@@ -158,26 +155,25 @@
                             android:layout_weight="1"
                             android:id="@+id/linear_test_schedule"
                             android:layout_margin="10dp"
-                            android:elevation="3dp"
+                            android:elevation="10dp"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="10dp"
-                            android:background="@drawable/dashboard_nav_green"
+                            android:background="@drawable/dashboard_nav_white"
                             android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:src="@drawable/to_do_list"
+                                android:padding="10dp"
+                                android:layout_height="80dp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 style="@style/TitleTextStyle"
                                 android:text="Test Scheduled"
-                                android:textColor="@color/white"
+                                android:textColor="@color/black"
                                 android:layout_height="wrap_content"/>
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:src="@drawable/clock_o_icon"
-                                android:padding="10dp"
-                                app:tint="@color/white"
-                                android:layout_height="80dp"/>
 
                         </LinearLayout>
 
@@ -186,28 +182,30 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_weight="1"
-                        android:layout_margin="10dp"
-                        android:elevation="3dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="30dp"
+                        android:elevation="10dp"
                         android:id="@+id/linear_booklets"
                         android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:background="@drawable/button_drawable"
+                        android:orientation="horizontal"
+                        android:padding="20dp"
+                        android:background="@drawable/dashboard_nav_white"
                         android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:src="@drawable/stack_of_books"
+                            android:padding="10dp"
+                            android:layout_height="80dp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             style="@style/TitleTextStyle"
                             android:text="Booklet / Practice Assingments"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:layout_height="wrap_content"/>
-
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:src="@drawable/book_icon"
-                            android:padding="10dp"
-                            app:tint="@color/white"
-                            android:layout_height="80dp"/>
 
                     </LinearLayout>
 

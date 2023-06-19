@@ -46,7 +46,7 @@ public class EnrolledAdapter extends RecyclerView.Adapter<EnrolledAdapter.ViewHo
         holder.tv_valid_date.setText(setDateFormat(enrolledPOJOS1.getValid_upto()));
         holder.tv_title_ec.setText(enrolledPOJOS1.getCourse_name());
         holder.tv_enrolled_date_ec.setText(setDateFormat(enrolledPOJOS1.getEnrollment_date()));
-        holder.tv_duration_ec.setText(enrolledPOJOS1.getNo_of_days());
+        holder.tv_duration_ec.setText(enrolledPOJOS1.getNo_of_days() + " Days");
         String img_url = IMG_URL+enrolledPOJOS1.getCourse_master_id()+"/course-image/"+enrolledPOJOS1.getCourse_image();
         Glide.with(context)
                 .applyDefaultRequestOptions(new RequestOptions()
