@@ -164,7 +164,7 @@
 
                             <ImageView
                                 android:layout_width="80dp"
-                                android:src="@drawable/to_do_list"
+                                android:src="@drawable/todolist"
                                 android:padding="10dp"
                                 android:layout_height="80dp"/>
 

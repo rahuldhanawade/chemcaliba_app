@@ -214,6 +214,7 @@ public class CoursesDetailsActivity extends BaseActivity {
                 map.put("student_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"student_id"));
                 map.put("emailid", UtilitySharedPreferences.getPrefs(getApplicationContext(),"emailid"));
                 map.put("course_id", course_id);
+                map.put("is_bought", is_bought);
                 Log.d("CourseDetailsParamas",""+map.toString());
                 return map;
             }
