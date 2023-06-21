@@ -63,7 +63,7 @@ public class ProfileActivity extends BaseActivity {
         stub.setLayoutResource(R.layout.activity_profile);
         View inflated = stub.inflate();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        FetchToolTitle.fetchTitle((fetchToolbarTitle) ProfileActivity.this,"Profile");
+        FetchToolTitle.fetchTitle(ProfileActivity.this,(fetchToolbarTitle) ProfileActivity.this,"Profile");
 
         loadingDialog = new LoadingDialog(ProfileActivity.this);
 

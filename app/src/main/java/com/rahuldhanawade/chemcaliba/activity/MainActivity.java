@@ -1,5 +1,7 @@
 package com.rahuldhanawade.chemcaliba.activity;
 
+import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayPopUpInfo;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +11,12 @@ import android.widget.LinearLayout;
 import com.rahuldhanawade.chemcaliba.R;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.BaseActivity;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.FetchToolTitle;
+import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 
 public class MainActivity extends BaseActivity {
 
     LinearLayout linear_live_lect,linear_enrolled_courses,linear_test_results,linear_test_schedule,linear_booklets;
-
+    String is_enrolled = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +24,9 @@ public class MainActivity extends BaseActivity {
         stub.setLayoutResource(R.layout.activity_main);
         View inflated = stub.inflate();
 
-        FetchToolTitle.fetchTitle(MainActivity.this,"Dashboard");
+        FetchToolTitle.fetchTitle(MainActivity.this,MainActivity.this,"Dashboard");
+
+        is_enrolled = UtilitySharedPreferences.getPrefs(MainActivity.this,"is_enrolled");
 
         init();
     }
@@ -58,8 +63,12 @@ public class MainActivity extends BaseActivity {
         linear_test_schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, TestScheduleActivity.class);
-                startActivity(i);
+                if(is_enrolled.equals("true")){
+                    Intent i = new Intent(MainActivity.this, TestScheduleActivity.class);
+                    startActivity(i);
+                }else{
+                    DisplayPopUpInfo(MainActivity.this, "You have not purchased any course or your course is expired");
+                }
             }
         });
 

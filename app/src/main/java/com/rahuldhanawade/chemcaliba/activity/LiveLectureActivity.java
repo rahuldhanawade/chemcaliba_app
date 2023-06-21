@@ -69,7 +69,7 @@ public class LiveLectureActivity extends BaseActivity{
         stub.setLayoutResource(R.layout.activity_live_lecture);
         View inflated = stub.inflate();
 
-        FetchToolTitle.fetchTitle((fetchToolbarTitle) LiveLectureActivity.this,"Live Lecture");
+        FetchToolTitle.fetchTitle(LiveLectureActivity.this,(fetchToolbarTitle) LiveLectureActivity.this,"Live Lecture");
 
         Init();
     }
@@ -146,7 +146,7 @@ public class LiveLectureActivity extends BaseActivity{
                     JSONObject responseObj=new JSONObject(response);
                     String courseData=responseObj.getString("data");
                     if(courseData==null || courseData.equals("[]") || courseData.equalsIgnoreCase("")){
-                        DisplayToastInfo(getApplicationContext(),"No Data Found");
+                        DisplayToastInfo(getApplicationContext(),"You have not purchased any course or your course is expired");
                     }else{
                         JSONArray data_array=new JSONArray(courseData);
                         for(int k=0; k< data_array.length();k++){

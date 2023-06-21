@@ -68,7 +68,7 @@ public class TestScheduleActivity extends BaseActivity {
         stub.setLayoutResource(R.layout.activity_test_schedule);
         View inflated = stub.inflate();
 
-        FetchToolTitle.fetchTitle(TestScheduleActivity.this,"Test Schedule");
+        FetchToolTitle.fetchTitle(TestScheduleActivity.this,TestScheduleActivity.this,"Test Schedule");
 
         Init();
     }
@@ -143,7 +143,7 @@ public class TestScheduleActivity extends BaseActivity {
                     JSONObject responseObj=new JSONObject(response);
                     String courseData=responseObj.getString("data");
                     if(courseData==null || courseData.equals("[]") || courseData.equalsIgnoreCase("")){
-                        DisplayToastInfo(getApplicationContext(),"No Data Found");
+                        DisplayToastInfo(getApplicationContext(),"You have not purchased any course or your course is expired");
                     }else{
                         JSONArray data_array=new JSONArray(courseData);
                         for(int k=0; k< data_array.length();k++){

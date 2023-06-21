@@ -4,4 +4,6 @@ public interface fetchToolbarTitle {
 
     public void updateToobarTitle(String title);
 
+    public void updateEndormentCount(boolean is_enrolled);
+
 }

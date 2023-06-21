@@ -69,7 +69,7 @@ public class HolidayActivity extends BaseActivity {
         stub.setLayoutResource(R.layout.activity_holiday);
         View inflated = stub.inflate();
 
-        FetchToolTitle.fetchTitle(HolidayActivity.this,"Test Results");
+        FetchToolTitle.fetchTitle(HolidayActivity.this,HolidayActivity.this,"Holiday List");
 
         Init();
     }

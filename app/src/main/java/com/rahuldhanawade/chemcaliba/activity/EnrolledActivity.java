@@ -62,7 +62,7 @@ public class EnrolledActivity extends BaseActivity {
         stub.setLayoutResource(R.layout.activity_enrolled);
         View inflated = stub.inflate();
 
-        FetchToolTitle.fetchTitle((fetchToolbarTitle) EnrolledActivity.this,"Enrolled Courses");
+        FetchToolTitle.fetchTitle(EnrolledActivity.this,(fetchToolbarTitle) EnrolledActivity.this,"Enrolled Courses");
 
         Init();
     }
@@ -106,7 +106,7 @@ public class EnrolledActivity extends BaseActivity {
                     JSONObject responseObj=new JSONObject(response);
                     String courseData=responseObj.getString("courseData");
                     if(courseData==null || courseData.equals("[]") || courseData.equalsIgnoreCase("")){
-                        DisplayToastInfo(getApplicationContext(),"No Data Found");
+                        DisplayToastInfo(getApplicationContext(),"You have not purchased any course or your course is expired");
                     }else{
                         JSONArray data_array=new JSONArray(courseData);
                         for(int k=0; k< data_array.length();k++){

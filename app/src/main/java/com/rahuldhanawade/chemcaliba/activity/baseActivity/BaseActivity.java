@@ -1,5 +1,7 @@
 package com.rahuldhanawade.chemcaliba.activity.baseActivity;
 
+import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayPopUpInfo;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +26,7 @@ import com.rahuldhanawade.chemcaliba.activity.MainActivity;
 import com.rahuldhanawade.chemcaliba.activity.OurCoursesActivity;
 import com.rahuldhanawade.chemcaliba.activity.PTActivity;
 import com.rahuldhanawade.chemcaliba.activity.ProfileActivity;
-import com.rahuldhanawade.chemcaliba.activity.SplashScreen;
+import com.rahuldhanawade.chemcaliba.activity.SubscribeProductActivity;
 import com.rahuldhanawade.chemcaliba.activity.TestResultActivity;
 import com.rahuldhanawade.chemcaliba.activity.TestScheduleActivity;
 import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
@@ -33,6 +35,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     Toolbar toolbar;
     private static final String TAG = BaseActivity.class.getSimpleName();
+    String is_enrolled = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +93,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             startActivity(i);
             overridePendingTransition(R.animator.move_left, R.animator.move_right);
         }else if(id == R.id.nav_test_schedule){
-            Intent i=new Intent(getApplicationContext(), TestScheduleActivity.class);
-            startActivity(i);
-            overridePendingTransition(R.animator.move_left, R.animator.move_right);
+            if(is_enrolled.equals("true")){
+                Intent i=new Intent(getApplicationContext(), TestScheduleActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.animator.move_left, R.animator.move_right);
+            }else{
+                DisplayPopUpInfo(BaseActivity.this, "You have not purchased any course or your course is expired");
+            }
         }else if(id == R.id.nav_announccments){
             Intent i=new Intent(getApplicationContext(), AnnouncementsActivity.class);
             startActivity(i);
@@ -125,5 +132,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public void updateToobarTitle(String title) {
         Log.d(TAG, "updateToobarTitle: "+title);
         toolbar.setTitle(title);
+    }
+
+    @Override
+    public void updateEndormentCount(boolean isEnrolled) {
+        Log.d(TAG, "updateEndormentCount: "+isEnrolled);
+        is_enrolled = String.valueOf(isEnrolled);
     }
 }

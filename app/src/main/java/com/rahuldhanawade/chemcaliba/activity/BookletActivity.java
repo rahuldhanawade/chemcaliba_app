@@ -61,7 +61,7 @@ public class BookletActivity extends BaseActivity {
         ViewStub stub = (ViewStub) findViewById(R.id.base_layout);
         stub.setLayoutResource(R.layout.activity_booklet);
         View inflated = stub.inflate();
-        FetchToolTitle.fetchTitle((fetchToolbarTitle) BookletActivity.this,"Booklets/Assesments");
+        FetchToolTitle.fetchTitle(BookletActivity.this,(fetchToolbarTitle) BookletActivity.this,"Booklets/Assesments");
 
         loadingDialog = new LoadingDialog(BookletActivity.this);
         

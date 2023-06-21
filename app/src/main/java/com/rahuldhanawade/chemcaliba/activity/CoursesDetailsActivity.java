@@ -66,7 +66,7 @@ public class CoursesDetailsActivity extends BaseActivity {
         stub.setLayoutResource(R.layout.activity_courses_details);
         View inflated = stub.inflate();
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        FetchToolTitle.fetchTitle((fetchToolbarTitle) CoursesDetailsActivity.this,"Course Details");
+        FetchToolTitle.fetchTitle(CoursesDetailsActivity.this,(fetchToolbarTitle) CoursesDetailsActivity.this,"Course Details");
 
         loadingDialog = new LoadingDialog(CoursesDetailsActivity.this);
 

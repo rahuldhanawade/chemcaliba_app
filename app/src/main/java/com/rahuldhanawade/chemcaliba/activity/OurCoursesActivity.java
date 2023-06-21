@@ -61,7 +61,7 @@ public class OurCoursesActivity extends BaseActivity {
         stub.setLayoutResource(R.layout.activity_our_courses);
         View inflated = stub.inflate();
 
-        FetchToolTitle.fetchTitle((fetchToolbarTitle) OurCoursesActivity.this,"Our Courses");
+        FetchToolTitle.fetchTitle(OurCoursesActivity.this,(fetchToolbarTitle) OurCoursesActivity.this,"Our Courses");
 
         Init();
     }

@@ -69,7 +69,7 @@ public class AnnouncementsActivity extends BaseActivity {
         stub.setLayoutResource(R.layout.activity_announcements);
         View inflated = stub.inflate();
 
-        FetchToolTitle.fetchTitle(AnnouncementsActivity.this,"Announcements");
+        FetchToolTitle.fetchTitle(AnnouncementsActivity.this,AnnouncementsActivity.this,"Announcements");
 
         Init();
     }

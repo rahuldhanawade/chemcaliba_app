@@ -69,7 +69,7 @@ public class PTActivity extends BaseActivity {
         stub.setLayoutResource(R.layout.activity_ptactivity);
         View inflated = stub.inflate();
 
-        FetchToolTitle.fetchTitle(PTActivity.this,"PT Meeting");
+        FetchToolTitle.fetchTitle(PTActivity.this,PTActivity.this,"PT Meeting");
 
         Init();
     }
