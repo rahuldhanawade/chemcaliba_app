@@ -39,7 +39,7 @@ public class HolidayAdapter extends RecyclerView.Adapter<HolidayAdapter.ViewHold
         holder.tv_title_HD.setText(holidayPOJOS1.getHolidayInformationTitle());
         holder.tv_category_HD.setText(holidayPOJOS1.getCourseCategoryName());
         holder.tv_from_HD.setText(holidayPOJOS1.getHolidayInformationFromDate());
-        holder.tv_to_HD.setText(holidayPOJOS1.getHolidayInformationFromDate());
+        holder.tv_to_HD.setText(holidayPOJOS1.getHolidayInformationToDate());
     }
 
     @Override

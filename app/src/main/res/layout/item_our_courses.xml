@@ -193,16 +193,6 @@
                         style="@style/TitleTextStyle"
                         android:layout_height="wrap_content"/>
 
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:id="@+id/tv_duration_oc"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        style="@style/TitleTextStyle"
-                        android:layout_height="wrap_content"/>
-
-
                 </LinearLayout>
 
                 <LinearLayout

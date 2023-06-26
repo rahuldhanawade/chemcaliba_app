@@ -51,8 +51,7 @@ public class OurCourcesAdapter extends RecyclerView.Adapter<OurCourcesAdapter.Vi
         OurCourcesPOJO ourCourcesPOJOS1= ourCourcesPOJOS.get(position);
         holder.tv_category_oc.setText(ourCourcesPOJOS1.getCourseCategoryName());
         holder.tv_course_category_info_oc.setText(ourCourcesPOJOS1.getCourseName());
-        holder.tv_date_oc.setText(ourCourcesPOJOS1.getCourseStartDate()+" To "+ourCourcesPOJOS1.getCourseStartDate());
-        holder.tv_duration_oc.setText("("+ourCourcesPOJOS1.getCourseDurationNumberOfDays() + " Days)");
+        holder.tv_date_oc.setText(ourCourcesPOJOS1.getCourseStartDate()+" To "+ourCourcesPOJOS1.getCourseEndDate()+ " ("+ourCourcesPOJOS1.getCourseDurationNumberOfDays() + " Days)");
         holder.tv_actual_price_oc.setText("₹"+ourCourcesPOJOS1.getCourseActualPrice());
         holder.tv_actual_price_oc.setPaintFlags(holder.tv_actual_price_oc.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tv_sell_price_oc.setText("₹"+ourCourcesPOJOS1.getCourseSellPrice());
@@ -91,7 +90,7 @@ public class OurCourcesAdapter extends RecyclerView.Adapter<OurCourcesAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_category_oc,tv_course_category_info_oc,tv_date_oc,tv_duration_oc,
+        TextView tv_category_oc,tv_course_category_info_oc,tv_date_oc,
                 tv_actual_price_oc,tv_sell_price_oc;
         ImageView iv_img_oc;
         LinearLayout linear_buy_now,linear_purchased,linear_expired;
@@ -100,7 +99,6 @@ public class OurCourcesAdapter extends RecyclerView.Adapter<OurCourcesAdapter.Vi
             tv_category_oc = itemView.findViewById(R.id.tv_category_oc);
             tv_course_category_info_oc = itemView.findViewById(R.id.tv_course_category_info_oc);
             tv_date_oc = itemView.findViewById(R.id.tv_date_oc);
-            tv_duration_oc = itemView.findViewById(R.id.tv_duration_oc);
             tv_actual_price_oc = itemView.findViewById(R.id.tv_actual_price_oc);
             tv_sell_price_oc = itemView.findViewById(R.id.tv_sell_price_oc);
             iv_img_oc = itemView.findViewById(R.id.iv_img_oc);

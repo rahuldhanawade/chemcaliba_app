@@ -53,8 +53,8 @@ public class CoursesDetailsActivity extends BaseActivity {
     private static final String TAG = CoursesDetailsActivity.class.getSimpleName();
     private LoadingDialog loadingDialog;
 
-    TextView tv_course_active_cd,tv_course_category_name_cd,tv_course_category_info_cd,tv_course_name_cd,tv_course_start_date_cd,
-            tv_course_end_date_cd,tv_duration_cd,tv_valid_date_cd,tv_actual_price_cd,tv_offer_price_cd;
+    TextView tv_course_active_cd,tv_course_category_name_cd,tv_course_name_cd,tv_discription_cd,
+            tv_course_start_date_cd, tv_course_end_date_cd,tv_duration_cd,tv_valid_date_cd,tv_actual_price_cd,tv_offer_price_cd;
     LinearLayout linear_course_doclink_cd,linear_video_list,linear_course_list,linear_buy_view;
     ImageView iv_course_img;
     String course_id = "", is_bought = "";
@@ -79,8 +79,8 @@ public class CoursesDetailsActivity extends BaseActivity {
     private void Init() {
         tv_course_active_cd = findViewById(R.id.tv_course_active_cd);
         tv_course_category_name_cd = findViewById(R.id.tv_course_category_name_cd);
-        tv_course_category_info_cd = findViewById(R.id.tv_course_category_info_cd);
         tv_course_name_cd = findViewById(R.id.tv_course_name_cd);
+        tv_discription_cd = findViewById(R.id.tv_discription_cd);
         tv_course_start_date_cd = findViewById(R.id.tv_course_start_date_cd);
         tv_course_end_date_cd = findViewById(R.id.tv_course_end_date_cd);
         tv_duration_cd = findViewById(R.id.tv_duration_cd);
@@ -136,7 +136,7 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 JSONObject CourseDetailsObj = responseObj.getJSONObject("course_details");
                                 boolean is_course_expired = CourseDetailsObj.getBoolean("is_course_expired");
                                 String course_category_name = CourseDetailsObj.getString("course_category_name");
-                                String course_category_info = CourseDetailsObj.getString("course_category_info");
+                                String course_category_info = CourseDetailsObj.getString("course_info");
                                 String course_name = CourseDetailsObj.getString("course_name");
                                 String course_start_date = CourseDetailsObj.getString("course_start_date");
                                 String course_end_date = CourseDetailsObj.getString("course_end_date");
@@ -155,8 +155,8 @@ public class CoursesDetailsActivity extends BaseActivity {
                                     linear_buy_view.setVisibility(View.VISIBLE);
                                 }
                                 tv_course_category_name_cd.setText(course_category_name);
-                                tv_course_category_info_cd.setText(course_category_info);
                                 tv_course_name_cd.setText(course_name);
+                                tv_discription_cd.setText(course_category_info);
                                 tv_course_start_date_cd.setText(course_start_date);
                                 tv_course_end_date_cd.setText(course_end_date);
                                 tv_duration_cd.setText(course_duration + " Days");
