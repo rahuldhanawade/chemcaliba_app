@@ -62,4 +62,7 @@ dependencies {
 
     //Razerpay
     implementation 'com.razorpay:checkout:1.6.18'
+
+    //ReadMoreTextView
+    implementation 'com.github.devsideal:ReadMoreOption:1.0.0'
 }

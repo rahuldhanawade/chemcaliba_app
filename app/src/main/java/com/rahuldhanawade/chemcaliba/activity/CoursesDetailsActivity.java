@@ -7,6 +7,7 @@ import static com.rahuldhanawade.chemcaliba.utills.CommonMethods.DisplayToastErr
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.devs.readmoreoption.ReadMoreOption;
 import com.rahuldhanawade.chemcaliba.R;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.BaseActivity;
 import com.rahuldhanawade.chemcaliba.activity.baseActivity.FetchToolTitle;
@@ -156,7 +158,18 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 }
                                 tv_course_category_name_cd.setText(course_category_name);
                                 tv_course_name_cd.setText(course_name);
-                                tv_discription_cd.setText(course_category_info);
+
+                                ReadMoreOption readMoreOption = new ReadMoreOption.Builder(getApplicationContext())
+                                        .textLength(300)
+                                        .moreLabel("SHOW MORE")
+                                        .lessLabel("SHOW LESS")
+                                        .moreLabelColor(Color.RED)
+                                        .lessLabelColor(Color.BLUE)
+                                        .labelUnderLine(true)
+                                        .build();
+
+                                readMoreOption.addReadMoreTo(tv_discription_cd, course_category_info);
+//                                tv_discription_cd.setText(course_category_info);
                                 tv_course_start_date_cd.setText(course_start_date);
                                 tv_course_end_date_cd.setText(course_end_date);
                                 tv_duration_cd.setText(course_duration + " Days");
