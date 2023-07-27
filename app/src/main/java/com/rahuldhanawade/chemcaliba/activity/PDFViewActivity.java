@@ -22,7 +22,6 @@ import com.rahuldhanawade.chemcaliba.utills.LoadingDialog;
 public class PDFViewActivity extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
-    ProgressDialog progressDialog;
 
     WebView webview;
     String pdfname = "",pdflink = "";

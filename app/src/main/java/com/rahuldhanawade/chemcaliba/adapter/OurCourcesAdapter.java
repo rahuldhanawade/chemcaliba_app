@@ -52,9 +52,9 @@ public class OurCourcesAdapter extends RecyclerView.Adapter<OurCourcesAdapter.Vi
         holder.tv_category_oc.setText(ourCourcesPOJOS1.getCourseCategoryName());
         holder.tv_course_category_info_oc.setText(ourCourcesPOJOS1.getCourseName());
         holder.tv_date_oc.setText(ourCourcesPOJOS1.getCourseStartDate()+" To "+ourCourcesPOJOS1.getCourseEndDate()+ " ("+ourCourcesPOJOS1.getCourseDurationNumberOfDays() + " Days)");
-        holder.tv_actual_price_oc.setText("₹"+ourCourcesPOJOS1.getCourseActualPrice());
+        holder.tv_actual_price_oc.setText("₹"+ourCourcesPOJOS1.getCourseActualPrice()+" (Inc. Gst)");
         holder.tv_actual_price_oc.setPaintFlags(holder.tv_actual_price_oc.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_sell_price_oc.setText("₹"+ourCourcesPOJOS1.getCourseSellPrice());
+        holder.tv_sell_price_oc.setText("₹"+ourCourcesPOJOS1.getCourseSellPrice()+" (Inc. Gst)");
         String img_url = IMG_URL+ourCourcesPOJOS1.getCourseMasterId()+"/course-image/"+ourCourcesPOJOS1.getCourseImage();
         Glide.with(context)
                 .applyDefaultRequestOptions(new RequestOptions()

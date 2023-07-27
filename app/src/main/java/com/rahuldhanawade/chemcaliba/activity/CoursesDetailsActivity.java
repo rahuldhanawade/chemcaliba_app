@@ -174,8 +174,8 @@ public class CoursesDetailsActivity extends BaseActivity {
                                 tv_course_end_date_cd.setText(course_end_date);
                                 tv_duration_cd.setText(course_duration + " Days");
                                 tv_valid_date_cd.setText(course_end_date);
-                                tv_actual_price_cd.setText("₹"+course_actual_price);
-                                tv_offer_price_cd.setText("₹"+course_sell_price);
+                                tv_actual_price_cd.setText("₹"+course_actual_price+" (Inc. Gst)");
+                                tv_offer_price_cd.setText("₹"+course_sell_price+" (Inc. Gst)");
 
                                 Glide.with(getApplicationContext())
                                         .applyDefaultRequestOptions(new RequestOptions()

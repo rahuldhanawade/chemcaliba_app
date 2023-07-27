@@ -198,59 +198,49 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
-                    android:weightSum="2"
                     android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Actual Price :"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        style="@style/TitleTextStyle"
+                        android:layout_height="wrap_content"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:text="Actual Price :"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_actual_price_oc"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        style="@style/TitleTextStyle"
+                        android:layout_height="wrap_content"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:id="@+id/tv_actual_price_oc"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
+                </LinearLayout>
 
-                    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Offer Price :"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        style="@style/TitleTextStyle"
+                        android:layout_height="wrap_content"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:text="Offer Price :"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:id="@+id/tv_sell_price_oc"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_sell_price_oc"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        style="@style/TitleTextStyle"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
