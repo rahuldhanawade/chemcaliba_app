@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -46,6 +48,7 @@ public class RegistrationScreen extends AppCompatActivity {
     private LoadingDialog loadingDialog;
 
     EditText edt_full_name,edt_email_id,edt_contact_no;
+    TextView tv_tc;
     CheckBox chk_tc;
     LinearLayout linear_register;
 
@@ -78,6 +81,16 @@ public class RegistrationScreen extends AppCompatActivity {
         edt_full_name = findViewById(R.id.edt_full_name);
         edt_email_id = findViewById(R.id.edt_email_id);
         edt_contact_no = findViewById(R.id.edt_contact_no);
+        tv_tc = findViewById(R.id.tv_tc);
+        tv_tc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://chemcaliba.com/privacy-policy/"));
+                startActivity(i);
+            }
+        });
+
 
         chk_tc = findViewById(R.id.chk_tc);
         chk_tc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

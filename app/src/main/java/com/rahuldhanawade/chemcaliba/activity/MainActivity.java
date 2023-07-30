@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity {
                     Intent i = new Intent(MainActivity.this, TestScheduleActivity.class);
                     startActivity(i);
                 }else{
-                    DisplayPopUpInfo(MainActivity.this, "You have not purchased any course or your course is expired");
+                    DisplayPopUpInfo(MainActivity.this, getResources().getString(R.string.msg_alert));
                 }
             }
         });

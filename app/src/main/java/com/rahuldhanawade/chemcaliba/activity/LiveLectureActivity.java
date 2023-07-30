@@ -60,7 +60,7 @@ public class LiveLectureActivity extends BaseActivity{
 
     EditText edt_search_live_lectures;
     LinearLayout linear_search_live_lectures;
-    String str_search = "";
+    String str_search = "",is_enrolled = "";
     ImageView clear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class LiveLectureActivity extends BaseActivity{
         View inflated = stub.inflate();
 
         FetchToolTitle.fetchTitle(LiveLectureActivity.this,(fetchToolbarTitle) LiveLectureActivity.this,"Live Lecture");
-
+        is_enrolled = UtilitySharedPreferences.getPrefs(LiveLectureActivity.this,"is_enrolled");
         Init();
     }
 
@@ -146,7 +146,11 @@ public class LiveLectureActivity extends BaseActivity{
                     JSONObject responseObj=new JSONObject(response);
                     String courseData=responseObj.getString("data");
                     if(courseData==null || courseData.equals("[]") || courseData.equalsIgnoreCase("")){
-                        DisplayToastInfo(getApplicationContext(),"You have not purchased any course or your course is expired");
+                        if(is_enrolled.equals("true")){
+                            DisplayToastInfo(getApplicationContext(),getResources().getString(R.string.msg_dat_not_found));
+                        }else{
+                            DisplayToastInfo(getApplicationContext(),getResources().getString(R.string.msg_alert));
+                        }
                     }else{
                         JSONArray data_array=new JSONArray(courseData);
                         for(int k=0; k< data_array.length();k++){

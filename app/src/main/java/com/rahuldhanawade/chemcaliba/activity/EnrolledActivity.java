@@ -54,6 +54,7 @@ public class EnrolledActivity extends BaseActivity {
     ArrayList<EnrolledPOJO> enrolledPOJOS = new ArrayList<>();
     EnrolledAdapter adapter;
     int page = 1, limit = 10;
+    String is_enrolled = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class EnrolledActivity extends BaseActivity {
         View inflated = stub.inflate();
 
         FetchToolTitle.fetchTitle(EnrolledActivity.this,(fetchToolbarTitle) EnrolledActivity.this,"Enrolled Courses");
-
+        is_enrolled = UtilitySharedPreferences.getPrefs(EnrolledActivity.this,"is_enrolled");
         Init();
     }
 
@@ -106,7 +107,11 @@ public class EnrolledActivity extends BaseActivity {
                     JSONObject responseObj=new JSONObject(response);
                     String courseData=responseObj.getString("courseData");
                     if(courseData==null || courseData.equals("[]") || courseData.equalsIgnoreCase("")){
-                        DisplayToastInfo(getApplicationContext(),"You have not purchased any course or your course is expired");
+                        if(is_enrolled.equals("true")){
+                            DisplayToastInfo(getApplicationContext(),getResources().getString(R.string.msg_dat_not_found));
+                        }else{
+                            DisplayToastInfo(getApplicationContext(),getResources().getString(R.string.msg_alert));
+                        }
                     }else{
                         JSONArray data_array=new JSONArray(courseData);
                         for(int k=0; k< data_array.length();k++){

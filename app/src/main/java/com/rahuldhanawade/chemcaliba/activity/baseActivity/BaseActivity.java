@@ -98,7 +98,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(i);
                 overridePendingTransition(R.animator.move_left, R.animator.move_right);
             }else{
-                DisplayPopUpInfo(BaseActivity.this, "You have not purchased any course or your course is expired");
+                DisplayPopUpInfo(BaseActivity.this, getResources().getString(R.string.msg_alert));
             }
         }else if(id == R.id.nav_announccments){
             Intent i=new Intent(getApplicationContext(), AnnouncementsActivity.class);

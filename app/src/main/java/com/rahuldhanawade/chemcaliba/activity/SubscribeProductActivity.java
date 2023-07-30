@@ -11,9 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,13 +58,15 @@ public class SubscribeProductActivity extends AppCompatActivity implements Payme
 
     ImageView iv_course_img_SP;
     TextView tv_product_name_SP,tv_unit_price_SP,tv_course_start_date_SP,tv_course_end_date_SP,tv_duration_SP,
-            tv_valid_date_SP,tv_discount_SP,tv_total_SP,tv_remove_SP;
+            tv_valid_date_SP,tv_discount_SP,tv_total_SP,tv_remove_SP,tv_refund_policy;
     LinearLayout linear_coupon_SP,linear_buy_now;
     EditText edt_coupon_SP;
     String Str_product_id = "", Str_course_end_date = "", Str_actual_price = "", Str_amount = "", Str_merchant_order_id = "",
             Str_discount_value = "",Str_discount_type = "",  Str_coupon_master_id = "", Str_coupon_discount_percent = "", Str_description = "";
 
     private JSONObject options;
+    CheckBox chk_refund_policy;
+    boolean is_refund = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +105,24 @@ public class SubscribeProductActivity extends AppCompatActivity implements Payme
         tv_discount_SP = findViewById(R.id.tv_discount_SP);
         tv_total_SP = findViewById(R.id.tv_total_SP);
         tv_remove_SP = findViewById(R.id.tv_remove_SP);
+        tv_refund_policy = findViewById(R.id.tv_refund_policy);
+        chk_refund_policy = findViewById(R.id.chk_refund_policy);
+
+        tv_refund_policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://chemcaliba.com/refund-policy/"));
+                startActivity(i);
+            }
+        });
+
+        chk_refund_policy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                is_refund = b;
+            }
+        });
 
         tv_remove_SP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,8 +150,11 @@ public class SubscribeProductActivity extends AppCompatActivity implements Payme
         linear_buy_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                DisplayPopUpInfo(SubscribeProductActivity.this, "Please contact support for subscription of this Course");
-                getPaymentDetails();
+                if(is_refund){
+                    getPaymentDetails();
+                }else{
+                    DisplayPopUpInfo(SubscribeProductActivity.this,"Please Accept Terms & Conditions");
+                }
             }
         });
 

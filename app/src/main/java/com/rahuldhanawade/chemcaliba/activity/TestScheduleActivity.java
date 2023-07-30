@@ -59,7 +59,7 @@ public class TestScheduleActivity extends BaseActivity {
 
     EditText edt_search_test_schedule;
     LinearLayout linear_search_test_schedule;
-    String str_search = "";
+    String str_search = "",is_enrolled = "";
     ImageView clear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class TestScheduleActivity extends BaseActivity {
         View inflated = stub.inflate();
 
         FetchToolTitle.fetchTitle(TestScheduleActivity.this,TestScheduleActivity.this,"Test Schedule");
-
+        is_enrolled = UtilitySharedPreferences.getPrefs(TestScheduleActivity.this,"is_enrolled");
         Init();
     }
 
@@ -143,7 +143,11 @@ public class TestScheduleActivity extends BaseActivity {
                     JSONObject responseObj=new JSONObject(response);
                     String courseData=responseObj.getString("data");
                     if(courseData==null || courseData.equals("[]") || courseData.equalsIgnoreCase("")){
-                        DisplayToastInfo(getApplicationContext(),"You have not purchased any course or your course is expired");
+                        if(is_enrolled.equals("true")){
+                            DisplayToastInfo(getApplicationContext(),getResources().getString(R.string.msg_dat_not_found));
+                        }else{
+                            DisplayToastInfo(getApplicationContext(),getResources().getString(R.string.msg_alert));
+                        }
                     }else{
                         JSONArray data_array=new JSONArray(courseData);
                         for(int k=0; k< data_array.length();k++){

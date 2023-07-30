@@ -20,4 +20,6 @@
     <string name="permission_rationale">Please grant location permission to start the service</string>
     <string name="title_alert_no_intenet">No internet</string>
     <string name="msg_alert_no_internet">Please make sure that you have active internet connection.</string>
+    <string name="msg_alert">You have not purchased any course or your course is expired</string>
+    <string name="msg_dat_not_found">Data Not found</string>
 </resources>
