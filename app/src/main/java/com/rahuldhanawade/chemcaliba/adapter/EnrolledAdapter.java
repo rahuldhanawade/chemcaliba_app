@@ -50,8 +50,8 @@ public class EnrolledAdapter extends RecyclerView.Adapter<EnrolledAdapter.ViewHo
         String img_url = IMG_URL+enrolledPOJOS1.getCourse_master_id()+"/course-image/"+enrolledPOJOS1.getCourse_image();
         Glide.with(context)
                 .applyDefaultRequestOptions(new RequestOptions()
-                        .placeholder(R.drawable.logo_chemcaliba)
-                        .error(R.drawable.logo_chemcaliba))
+                        .placeholder(R.drawable.banner_img)
+                        .error(R.drawable.banner_img))
                 .load(img_url)
                 .into(holder.iv_img_ec);
     }

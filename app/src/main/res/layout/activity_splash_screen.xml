@@ -10,7 +10,7 @@
 
     <ImageView
         android:layout_width="300dp"
-        android:src="@drawable/logo_chemcaliba"
+        android:src="@drawable/banner_img"
         android:layout_height="300dp"/>
 
 </LinearLayout>

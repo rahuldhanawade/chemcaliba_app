@@ -18,7 +18,7 @@
         android:layout_centerInParent="true"
         android:padding="10dp"
         android:layout_margin="10dp"
-        android:src="@drawable/logo_chemcaliba" />
+        android:src="@drawable/banner_img" />
 
     <TextView
         android:layout_width="match_parent"

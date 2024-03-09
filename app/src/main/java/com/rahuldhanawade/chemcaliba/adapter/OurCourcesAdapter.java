@@ -58,8 +58,8 @@ public class OurCourcesAdapter extends RecyclerView.Adapter<OurCourcesAdapter.Vi
         String img_url = IMG_URL+ourCourcesPOJOS1.getCourseMasterId()+"/course-image/"+ourCourcesPOJOS1.getCourseImage();
         Glide.with(context)
                 .applyDefaultRequestOptions(new RequestOptions()
-                        .placeholder(R.drawable.logo_chemcaliba)
-                        .error(R.drawable.logo_chemcaliba))
+                        .placeholder(R.drawable.banner_img)
+                        .error(R.drawable.banner_img))
                 .load(img_url)
                 .into(holder.iv_img_oc);
         boolean is_bought = ourCourcesPOJOS1.getIsAlreadyBought();

@@ -179,8 +179,8 @@ public class CoursesDetailsActivity extends BaseActivity {
 
                                 Glide.with(getApplicationContext())
                                         .applyDefaultRequestOptions(new RequestOptions()
-                                                .placeholder(R.drawable.logo_chemcaliba)
-                                                .error(R.drawable.logo_chemcaliba))
+                                                .placeholder(R.drawable.banner_img)
+                                                .error(R.drawable.banner_img))
                                         .load(course_img_url)
                                         .into(iv_course_img);
 
