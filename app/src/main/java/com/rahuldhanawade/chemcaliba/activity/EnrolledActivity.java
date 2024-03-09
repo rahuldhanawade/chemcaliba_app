@@ -105,14 +105,15 @@ public class EnrolledActivity extends BaseActivity {
                 progressBar.setVisibility(View.GONE);
                 try {
                     JSONObject responseObj=new JSONObject(response);
-                    String courseData=responseObj.getString("courseData");
-                    if(courseData==null || courseData.equals("[]") || courseData.equalsIgnoreCase("")){
+                    String status=responseObj.getString("status");
+                    if(status.equals("false")){
                         if(is_enrolled.equals("true")){
                             DisplayToastInfo(getApplicationContext(),getResources().getString(R.string.msg_dat_not_found));
                         }else{
                             DisplayToastInfo(getApplicationContext(),getResources().getString(R.string.msg_alert));
                         }
                     }else{
+                        String courseData=responseObj.getString("courseData");
                         JSONArray data_array=new JSONArray(courseData);
                         for(int k=0; k< data_array.length();k++){
                             JSONObject dataObj=data_array.getJSONObject(k);

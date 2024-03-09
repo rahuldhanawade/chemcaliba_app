@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChemCaliba</string>
+    <string name="app_name">ChemCaliba ED</string>
     <string name="instructions">Password should be of minimum 8 characters.\nPassword should be of maximum 16 characters.\nPassword must have atleast one upper case character.\nPassword must have atleast one digit.\nPassword must have atleast one special characters [!@#$%)*_(+=}{|:;,.>}].</string>
 
     <string name="app_nav_1">Home</string>

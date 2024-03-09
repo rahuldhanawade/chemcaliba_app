@@ -218,7 +218,7 @@
                 style="@style/TitleTextStyle"
                 android:gravity="center"
                 android:layout_alignParentBottom="true"
-                android:text="©ChemCaliba 2023"
+                android:text="©ChemCaliba ED 2024"
                 android:textStyle="bold"
                 android:layout_height="wrap_content"/>
 

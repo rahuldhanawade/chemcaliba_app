@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
                 android:textStyle="bold"
-                android:text="\@Copyright by 2023 Chemcaliba"
+                android:text="\@Copyright by 2024 Chemcaliba ED"
                 android:textAlignment="center"
                 android:textSize="12sp" />
 
