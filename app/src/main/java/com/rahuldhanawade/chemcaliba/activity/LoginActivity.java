@@ -36,6 +36,7 @@ import com.rahuldhanawade.chemcaliba.utills.UtilitySharedPreferences;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -158,7 +159,21 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         loadingDialog.dismissDialog();
+                        if (error == null || error.networkResponse == null) {
+                            Log.d("TAG", "onErrorResponse: error");
+                            return;
+                        }
 
+                        String body;
+                        //get response body and parse with appropriate encoding
+                        try {
+                            body = new String(error.networkResponse.data,"UTF-8");
+                            Log.d("TAG", "errResponse: "+body);
+                        } catch (UnsupportedEncodingException e) {
+                            // exception
+                            Log.d("TAG", "errResponse: UnsupportedEncodingException");
+                            e.printStackTrace();
+                        }
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                             DisplayToastError(LoginActivity.this,"Server is not connected to internet.");
                         } else if (error instanceof AuthFailureError) {
